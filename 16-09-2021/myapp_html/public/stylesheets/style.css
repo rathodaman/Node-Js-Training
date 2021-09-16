@@ -1,0 +1,78 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.div1{
+  background-color: #F7DC6F ;
+  color: red;
+    padding-top: 1%;
+        padding-bottom: 1%;
+        margin-top: 2%;
+}
+a{
+  text-decoration: none;
+  padding-left: 3%;
+  padding-right: 2%;
+    margin-top: 30px;
+     font-size: 30px;
+       font-style: revert;
+}
+.div2{
+  background-color: #FAD7A0;
+  width: 500px;
+  height: 200px;
+  border: solid;
+    /*border-left: solid darkred 6px;*/
+      border-radius: 24px;
+      margin-top: 5%;
+      margin-left: 30%;
+}
+.demo0{
+  font-size: 50px;
+  padding-left: 25%
+
+}
+.d1{
+  padding-left: 26%;
+        margin-top: 7%;
+        
+}
+.d2{
+  background-color: #F7DC6F ;
+  height: 40px;
+    padding-left: 75%;
+    padding-top: 1%;
+    font-size: 20px;
+}
+ul{
+  padding-left: 5%;
+  font-size: 30px;
+}
+th{
+  font-size: 30px;
+}
+.cl{
+  margin-top: 10%;
+  margin-left: 10%;
+}
+.d1{
+  padding-left: 26%;
+        margin-top: 7%;
+        
+}
+.d2{
+  background-color: #F7DC6F ;
+  height: 40px;
+    padding-left: 75%;
+    padding-top: 1%;
+    font-size: 20px;
+}
+.hov:hover{
+  background-color: gray;
+  color: white;
+}
