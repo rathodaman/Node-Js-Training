@@ -1,0 +1,42 @@
+<html>
+    <head> 
+        <script>	
+
+				  var calc = function(a) {
+				    this.result = a;
+				  }
+				  calc.prototype.add = function(a) {
+				    this.result = this.result + a;
+				    return this;
+				  }
+
+				  calc.prototype.mult = function(a) {
+				    this.result = this.result * a;
+				    return this;
+				  }
+				 
+				  calc.prototype.div = function(a) {
+				    this.result = this.result / a;
+				    return this;
+				  }
+
+				  calc.prototype.sub = function(a) {
+				    this.result = this.result - a;
+				    return this;
+				  }
+				  calc.prototype.getvalue = function() {
+				    return this.result;
+				  }
+				
+				  var ca=new calc(10);
+				// Obj.addNumber(10, 20).multiplyNumber(10).divideNumber(10);
+				// alert(Obj.result);
+				var value=ca.add(5).mult(2).div(3).sub(2).getvalue();
+				console.log(value);
+        		alert(value); //8
+		</script>
+    </head>
+	<body>
+
+    </body>
+</html>
