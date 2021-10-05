@@ -1,0 +1,57 @@
+<html>
+    <head>
+    <style>
+        table 
+        {
+            counter-reset: tableCount;
+        }
+        .counterCell:before 
+        {
+            content: counter(tableCount); 
+            counter-increment: tableCount; 
+        }
+    </style>
+    <script>
+        function ConfirmDelete()
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    </script>
+    </head>
+<body>
+    <a href="add-form">Add Record</a> |
+<a href="display-user">Show Record</a> |
+<a href="category/add">Add Category</a> |
+<a href="category/display">Show Category</a> |
+<a href="subcategory/add">Add SubCategory</a> |
+<a href="subcategory/display">Show SubCategory</a> 
+    <h1>Display Category</h1>
+    <table border='1'>
+        <tr>
+            <th>ID</th>
+            <th>category_name</th>
+            <th>Action</th>
+        </tr>
+            {{#each user_array}}
+        <tr>
+           <td class="counterCell"></td>
+            <td>{{category_name}}</td>
+           
+            <td>
+                    <a href='/category/edit/{{_id}}'>Edit</a> | 
+                    <a href='/category/delete/{{_id}}' Onclick="ConfirmDelete()">Delete</a> |
+                    <a href='/category/show/{{_id}}'>Show</a>
+          
+          </td>
+        </tr>
+         {{else}}
+        No Record Found
+        
+    </table>
+  {{/each}}
+</body>
+</html>
