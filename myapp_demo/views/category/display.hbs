@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <h1>Category Display</h1>
+       <a href="display">Category Display</a>|
+        <a href="add">Category Add</a><br><br>
+        <table border="1">
+            <tr>
+                <th>CategoryName</th>
+                <th>Action</th>
+            </tr>
+            {{#each category_array}}
+            <tr>
+                <td>{{category_name}}</td>
+                <td>
+                    <a href="/category/edit/{{_id}}">Edit</a>|
+                    <a href="/category/delete/{{_id}}">Delete</a>
+                </td>
+            </tr>
+            {{else}}
+            Record Not Found
+        </table>
+         {{/each}}
+    </body>
+</html>

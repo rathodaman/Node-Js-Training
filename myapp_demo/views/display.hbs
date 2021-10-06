@@ -1,0 +1,36 @@
+<html>
+    <body>
+        <h1>User Display</h1>
+         <a href="display">User Display</a>|
+        <a href="/">User Add</a><br><br>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Action</th>
+            </tr>
+            {{#each admin_array}}
+            <tr>
+                <td>{{user_name}}</td>
+                <td>{{user_pass}}</td>
+                <td>{{user_gender}}</td>
+                <td>{{user_email}}</td>
+                <td>{{user_dob}}</td>
+                <td>{{user_address}}</td>
+                <td>{{user_city}}</td>
+                <td>
+                    <a href="edit/{{_id}}">Edit</a>|
+                    <a href="delete/{{_id}}">Delete</a>
+                </td>
+            </tr>
+            {{else}}
+            Record Not Found
+        </table>
+         {{/each}}
+    </body>
+</html>

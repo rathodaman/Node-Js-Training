@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/', function(req, res, next) {
+  res.render('statecity/index');
+});
+
 router.get('/country', function(req, res, next) {
     res.render('country/coun', { title: 'Express' });
   });

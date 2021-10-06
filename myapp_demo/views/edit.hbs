@@ -1,0 +1,25 @@
+<html>
+    <body>
+        <a href="display">User Display</a>|
+        <a href="/">User Add</a><br><br>
+        <h1>User Details</h1>
+        <form method="post">
+            UserName: <input type="text" value="{{editdata.user_name}}" name="name"><br><br>
+            Password: <input type="password" value="{{editdata.user_pass}}" name="pass"><br><br>
+            Gender: <input type="radio" name="gender" value="{{editdata.user_gender}}">Male
+            <input type="radio" name="gender" value="{{editdata.user_gender}}">Female<br><br>
+            Email: <input type="email" name="email" value="{{editdata.user_email}}"><br><br>
+            DOB: <input type="date" name="dob" value="{{editdata.user_dob}}"><br><br>
+            Address: <input type="text" name="address" value="{{editdata.user_address}}"><br><br>
+            City: <select name="city" value="{{editdata.user_city}}">
+                <option value="dhar">Dhar</option>
+                <option value="indore">Indore</option>
+                <option value="bhopal">Bhopal</option>
+                <option value="dewas">Dewas</option>
+                <option value="ratlam">Ratlam</option>
+                <option value="mhow">Mhow</option>
+            </select><br><br>
+            <input type="submit">
+        </form>
+    </body>
+</html>
