@@ -1,0 +1,89 @@
+{{>sidebar}}
+{{>navbar}}
+ <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                <div class="col-sm-6">UPDATE USER</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Update User</li>
+                    </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+<section class="content">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">UPDATE USER</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="inputName">User Name</label>
+                <input type="text" id="inputName" value="{{editdata.user_name}}" class="form-control" name="user_name">
+              </div>
+
+              <div class="form-group">
+                <label for="inputName">User Email</label>
+                <input type="email" id="inputName" value="{{editdata.user_email}}" class="form-control" name="user_email">
+              </div>
+
+              <div class="form-group">
+                <label for="inputName">User Password</label>
+                <input type="text" id="inputName" value="{{editdata.user_password}}" class="form-control" name="user_password">
+              </div>
+
+               <div class="form-group">
+                <label for="inputName">User Gender</label>
+             &nbsp;&nbsp;
+                <input type="radio" value="male" value="{{editdata.user_gender}}" name="user_gender">Male&nbsp;&nbsp;
+                 <input type="radio" value="female" value="{{editdata.user_gender}}" name="user_gender">Female
+              </div>
+             
+              <div class="form-group">
+                <label for="inputName">User Address</label>
+                <input type="text" id="inputName" value="{{editdata.user_address}}" class="form-control" name="user_address">
+              </div>
+
+              <div class="form-group">
+                <label for="inputStatus">Area</label>
+                <select class="form-control custom-select" value="{{editdata._area.area_name}}" name="_area">
+                  <option selected disabled>Select one</option>
+                  {{#each area_array}}
+                  <option value='{{_id}}'>{{area_name}}</option>
+                    {{/each}}
+                </select>
+              </div>
+             
+             <div class="form-group">
+                <label for="inputName">User Image</label><br>
+                <input type="file" id="inputName" value="{{editdata.user_photo}}" name="user_photo">
+              </div>
+
+
+                <div class="row">
+                    <div class=" col-4 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-block ">Update user</button>
+                    </div>
+                </div>  
+                </form>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        
+      </div>
