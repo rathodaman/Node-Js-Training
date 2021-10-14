@@ -64,10 +64,10 @@ router.get('/delete/:id', function(req, res) {
     CategoryModel.findByIdAndDelete(req.params.id, function(err, project) {
       if (err) {
         console.log("Error in Record Delete " + err);
-          res.redirect('/category/display');
+          res.redirect('/admin/category/display');
       } else {
         console.log(" Record Deleted ");
-          res.redirect('/category/display');
+          res.redirect('/admin/category/display');
       }
   });
 });
@@ -95,10 +95,10 @@ router.post('/edit/:id', function(req, res) {
     CategoryModel.findByIdAndUpdate(req.params.id, mybodydata, function(err) {
         if (err) {
             console.log("Error in Record Update");
-            res.redirect('/category/display');
+            res.redirect('/admin/category/display');
         } else {
           // res.send(JSON.stringify({ "flag": 1, "name": "success" })) ;
-             res.redirect('/category/display');
+             res.redirect('/admin/category/display');
         }
     });
   });

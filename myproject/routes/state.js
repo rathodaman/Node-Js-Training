@@ -67,7 +67,7 @@ router.get('/delete/:id', function(req, res) {
           res.redirect('/state/display');
       } else {
         console.log(" Record Deleted ");
-          res.redirect('/state/display');
+          res.redirect('/admin/state/display');
       }
   });
 });
@@ -98,7 +98,7 @@ router.post('/edit/:id', function(req, res) {
             res.redirect('/state/display');
         } else {
           // res.send(JSON.stringify({ "flag": 1, "name": "success" })) ;
-             res.redirect('/state/display');
+             res.redirect('/admin/state/display');
         }
     });
   });

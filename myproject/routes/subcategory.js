@@ -92,11 +92,11 @@ router.get('/delete/:id', function(req, res) {
     SubCategoryModel.findByIdAndDelete(req.params.id, function(err, project) {
         if (err) {
           console.log("Error in Record Delete " + err);
-            res.redirect('/display');
+            res.redirect('/admin/subcategory/display');
         } else {
   
           console.log(" Record Deleted ");
-            res.redirect('/subcategory/display');
+            res.redirect('/admin/subcategory/display');
         }
     });
 });
@@ -108,8 +108,10 @@ router.get('/edit/:id', function(req, res) {
         if (err) {
             console.log("Edit Fetch Error " + err);
         } else {
-            console.log(db_subcategory_array);
-            res.render('admin/subcategory/edit',{subcategory_array: db_subcategory_array});
+            CategoryModel.find({},function(err, db_category_array){
+                res.render('admin/subcategory/edit',{subcategory_array: db_subcategory_array,category_array: db_category_array});
+            });
+            // console.log(db_subcategory_array);
         }
     });
 });
@@ -124,12 +126,12 @@ router.post('/edit/:id', function(req, res) {
     SubCategoryModel.findByIdAndUpdate(req.params.id, mybodydata, function(err) {
         if (err) {
             console.log("Error in Record Update");
-            res.redirect('/subcategory/display');
+            res.redirect('/admin/subcategory/display');
         } else {
-            res.redirect('/subcategory/display');
+            res.redirect('/admin/subcategory/display');
         }
     });
-  });
+  });  
   
 
 

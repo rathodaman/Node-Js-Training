@@ -44,7 +44,7 @@ router.post('/add', function(req, res, next) {
       if (err) {
          console.log("Error in Insert Record");
       } else {
-          res.render('admin/area/add');
+          res.redirect('/admin/area/add');
       }
   })
 });
@@ -87,10 +87,10 @@ router.get('/delete/:id', function(req, res) {
     AreaModel.findByIdAndDelete(req.params.id, function(err, project) {
       if (err) {
         console.log("Error in Record Delete " + err);
-          res.redirect('/area/display');
+          res.redirect('/admin/area/display');
       } else {
         console.log(" Record Deleted ");
-          res.redirect('/area/display');
+          res.redirect('/admin/area/display');
       }
   });
 });
@@ -120,10 +120,10 @@ router.post('/edit/:id', function(req, res) {
     AreaModel.findByIdAndUpdate(req.params.id, mybodydata, function(err) {
         if (err) {
             console.log("Error in Record Update");
-            res.redirect('/area/display');
+            res.redirect('/admin/area/display');
         } else {
           // res.send(JSON.stringify({ "flag": 1, "name": "success" })) ;
-             res.redirect('/area/display');
+             res.redirect('/admin/area/display');
         }
     });
   });

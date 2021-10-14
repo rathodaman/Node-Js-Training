@@ -51,12 +51,12 @@ router.post('/add', function(req, res, next) {
       if (err) {
          console.log("Error in Insert Record");
       } else {
-        fileobj.mv("public/upload/"+filename,function(err){
+        fileobj.mv("public/product images/"+filename,function(err){
             if(err)
             return res.status(500).send(err);
             console.log("file uploaded");  
           });
-          res.render('admin/product/add');
+          res.redirect('/admin/product/add');
       }
   })
 });
@@ -102,7 +102,7 @@ router.get('/delete/:id', function(req, res) {
           res.redirect('/product/display');
       } else {
         console.log(" Record Deleted ");
-          res.redirect('/product/display');
+          res.redirect('/admin/product/display');
       }
   });
 });
@@ -110,19 +110,25 @@ router.get('/delete/:id', function(req, res) {
 //Get Single User for Edit Record
 router.get('/edit/:id', function(req, res) {
     console.log(req.params.id);
-    ProductModel.findById(req.params.id, function(err, db_category_array) {
+    ProductModel.findById(req.params.id, function(err, db_product_array) {
         if (err) {
             console.log("Edit Fetch Error " + err);
         } else {
-            console.log(db_category_array);
-  
-            res.render('admin/product/edit', { editdata: db_category_array });
+          SubCategoryModel.find({},function(err, db_subcategory_array){
+            CategoryModel.find({},function(err, db_category_array){
+              console.log("product data fatched"+db_product_array);
+              res.render('admin/product/edit', { editdata: db_product_array,category_array:db_category_array,subcategory_array:db_subcategory_array});
+            }).lean();
+          }).lean();
         }
-    });
+    }).lean();
 });
 
 //Update Record Using Post Method
 router.post('/edit/:id', function(req, res) {
+  var fileobj=req.files.image
+  var filename=req.files.image.name
+  console.log(req.files.image);
     console.log("Edit ID is"+ req.params.id);
     const mybodydata = {
         product_name : req.body.name,
@@ -135,10 +141,14 @@ router.post('/edit/:id', function(req, res) {
     ProductModel.findByIdAndUpdate(req.params.id, mybodydata, function(err) {
         if (err) {
             console.log("Error in Record Update");
-            res.redirect('/product/display');
+            res.redirect('/admin/product/display');
         } else {
-          // res.send(JSON.stringify({ "flag": 1, "name": "success" })) ;
-             res.redirect('/product/display');
+          fileobj.mv("public/product images/"+filename,function(err){
+            if(err)
+            return res.status(500).send(err);
+            console.log("file uploaded");  
+          });
+             res.redirect('/admin/product/display');
         }
     });
   });

@@ -8,6 +8,9 @@ var mongoose = require('mongoose');
 var fileUpload = require('express-fileupload');
 var session = require('express-session');
 var _handlebars = require('handlebars')
+var helpers = require('handlebars-helpers')({
+  handlebars: _handlebars
+});
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
@@ -23,11 +26,14 @@ var {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access
 var app = express();
 
 // view engine setup
+// const hbs = exphbs.create({
+//   "helpers":helpers
+// });
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars',exphbs({
   defaultLayout:false,
-  handlebars: allowInsecurePrototypeAccess(_handlebars)
-
+  handlebars: allowInsecurePrototypeAccess(_handlebars) ,
+  "helpers":helpers
 }));
 app.set('view engine', 'handlebars');
 

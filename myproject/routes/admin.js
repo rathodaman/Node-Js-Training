@@ -32,19 +32,6 @@ router.post('/signup', function(req, res, next) {
     })
 });
 
-//display
-router.get('/display',function(req, res, next){
-  adminModel.find(function(err, data){
-      if(err){
-          console.log("Error in admin display"+err);
-      }else{
-          console.log("Successfully display admin"+data);
-          res.render('admin/account/display',{admindata : data});
-      }
-  }).lean();
-});
-
-
 //Admin Login
 router.get('/login', function(req, res, next) {
   res.render('admin/account/login');
@@ -101,6 +88,20 @@ router.get('/dashboard', function(req, res, next) {
   }
   res.render('admin/account/dashboard', { adminemail: adminemail,adminname:adminname});
 });
+
+//display
+router.get('/display',function(req, res, next){
+  adminModel.find(function(err, data){
+      if(err){
+          console.log("Error in admin display"+err);
+      }else{
+          console.log("Successfully display admin"+data);
+          res.render('admin/account/display',{admindata : data});
+      }
+  }).lean();
+});
+
+
 
 //change password page route
 router.get('/changepassword', function (req, res, next) {

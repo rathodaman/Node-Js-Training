@@ -48,7 +48,7 @@
 
             <div class="form-group">
                 <label for="inputStatus">Category</label>
-                <select class="form-control custom-select" value="{{editdata.category_name}}" name="_category">
+                <select class="form-control custom-select" name="_category">
                   <option selected disabled>Select one</option>
                   {{#each category_array}}
                   <option value='{{_id}}'>{{category_name}}</option>
@@ -58,7 +58,7 @@
 
               <div class="form-group">
                 <label for="inputStatus">Subcategory</label>
-                <select class="form-control custom-select" value="{{editdata.subcategory_name}}" name="_subcategory">
+                <select class="form-control custom-select" name="_subcategory">
                   <option selected disabled>Select one</option>
                   {{#each subcategory_array}}
                   <option value='{{_id}}'>{{subcategory_name}}</option>
@@ -68,7 +68,7 @@
 
               <div class="form-group">
                 <label for="inputDescription">Product Image</label><br>
-                  <input type="file" id="inputName" value="{{editdata.product_image}}" name="image">
+                  <input type="file" id="inputName" value="{{editdata.product_image}}" name="image">{{editdata.product_image}}
               </div>
 
                <div class="row">

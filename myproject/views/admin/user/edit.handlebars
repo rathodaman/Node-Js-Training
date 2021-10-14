@@ -49,8 +49,8 @@
                <div class="form-group">
                 <label for="inputName">User Gender</label>
              &nbsp;&nbsp;
-                <input type="radio" value="male" value="{{editdata.user_gender}}" name="user_gender">Male&nbsp;&nbsp;
-                 <input type="radio" value="female" value="{{editdata.user_gender}}" name="user_gender">Female
+                <input type="radio" value="male" value="{{editdata.user_gender}}" {{#compare editdata.user_gender "==" "male"}}checked{{else}}{{/compare}} name="user_gender">Male&nbsp;&nbsp;
+                <input type="radio" value="female" value="{{editdata.user_gender}}" {{#compare editdata.user_gender "==" "female"}}checked{{/compare}} name="user_gender">Female
               </div>
              
               <div class="form-group">

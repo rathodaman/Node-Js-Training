@@ -43,7 +43,7 @@ router.post('/add', function(req, res, next) {
       if (err) {
          console.log("Error in Insert Record");
       } else {
-          res.redirect('/city/add');
+          res.redirect('/admin/city/add');
       }
   })
 });
@@ -96,7 +96,7 @@ router.get('/delete/:id', function(req, res) {
         } else {
   
           console.log(" Record Deleted ");
-            res.redirect('/city/display');
+            res.redirect('/admin/city/display');
         }
     });
 });
@@ -108,8 +108,10 @@ router.get('/edit/:id', function(req, res) {
         if (err) {
             console.log("Edit Fetch Error " + err);
         } else {
-            console.log(db_subcategory_array);
-            res.render('admin/city/edit',{city_array: db_subcategory_array});
+            StateModel.find({},function(err, db_category_array){
+                console.log(db_subcategory_array);
+            res.render('admin/city/edit',{city_array: db_subcategory_array,state_array:db_category_array});
+            });
         }
     });
 });
@@ -124,9 +126,9 @@ router.post('/edit/:id', function(req, res) {
     CityModel.findByIdAndUpdate(req.params.id, mybodydata, function(err) {
         if (err) {
             console.log("Error in Record Update");
-            res.redirect('/city/display');
+            res.redirect('/admin/city/display');
         } else {
-            res.redirect('/city/display');
+            res.redirect('/admin/city/display');
         }
     });
   });

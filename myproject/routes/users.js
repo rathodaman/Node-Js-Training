@@ -50,7 +50,7 @@ data.save(function(err) {
         console.log("file uploaded");  
       })
       console.log("data added");
-        res.redirect('/users/add');
+        res.redirect('/admin/users/add');
     }
 })
 });
@@ -80,24 +80,25 @@ router.get('/delete/:id', function(req, res) {
   UsersModel.findByIdAndDelete(req.params.id, function(err, project) {
     if (err) {
       console.log("Error in Record Delete " + err);
-        res.redirect('/users/display');
+        res.redirect('/admin/users/display');
     } else {
       console.log(" Record Deleted ");
-        res.redirect('/users/display');
+        res.redirect('/admin/users/display');
     }
 });
 });
 
-//Get Single User for Edit Record
+// Edit Record
 router.get('/edit/:id', function(req, res) {
     console.log(req.params.id);
     UsersModel.findById(req.params.id, function(err, db_category_array) {
         if (err) {
             console.log("Edit Fetch Error " + err);
         } else {
+          AreaModel.find({},function(err, db_area_array){
             console.log(db_category_array);
-  
-            res.render('admin/user/edit', { editdata: db_category_array });
+            res.render('admin/user/edit', { editdata: db_category_array,area_array:db_area_array});
+          })
         }
     });
 });
@@ -120,10 +121,10 @@ router.post('/edit/:id', function(req, res) {
     userModel.findByIdAndUpdate(req.params.id, mybodydata, function(err) {
         if (err) {
             console.log("Error in Record Update");
-            res.redirect('/users/display');
+            res.redirect('/admin/users/display');
         } else {
           // res.send(JSON.stringify({ "flag": 1, "name": "success" })) ;
-             res.redirect('/users/display');
+             res.redirect('/admin/users/display');
         }
     });
   });
