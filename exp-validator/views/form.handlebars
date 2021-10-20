@@ -15,7 +15,7 @@
                 <p style="color: green;">{{success.msg }}</p>
                   {{/each}}
             {{/if}} --}}
-          
+          {{errors.password.msg}}
         <a href="display">Display</a>
        
         <div class="mx-auto card" style="width: 50rem; ">
@@ -24,62 +24,76 @@
             </div>
             <div class="container ">
             
-        <form method="post" class="col-md-8 mx-auto">
+        <form method="post" class="col-md-8 mx-auto" action="form-process">
             
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name">
+                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name" value="{{data.name}}">
                     {{#if errors}}
                     <small id="emailHelp" >{{errors.name.msg}}</small>
-               {{/if}}
+                    {{/if}}
                 </div>
                  <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email" value="{{data.email}}">
                     {{#if errors}}
                     <small id="emailHelp" >{{errors.email.msg}}</small>
                 {{/if}}
                 </div>
                  <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No.</label>
-                    <input type="number" class="form-control" name="mobile" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Mobile No.">
+                    <input type="number" class="form-control" name="mobile" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Mobile No." value="{{data.mobile}}">
                      {{#if errors}}
                     <small id="emailHelp" >{{errors.mobile.msg}}</small>
                 {{/if}}
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password">
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password" value="{{data.password}}">
                      {{#if errors}}
                      <small id="emailHelp" >{{errors.password.msg}}</small>
                 {{/if}}
                 </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input type="password" class="form-control" name="cpassword" id="exampleInputPassword1" placeholder="Enter Password" value="{{data.cpassword}}">
+                     {{#if errors}}
+                     <small id="emailHelp" >{{errors.cpassword.msg}}</small>
+                {{/if}}
+                </div>
                  <div class="form-group">
                     <label for="exampleInputPassword1">Aadhar Card No.</label>
-                    <input type="number" class="form-control" name="aadhar" id="exampleInputPassword1" placeholder="Enter Aadhar No">
+                    <input type="number" class="form-control" name="aadhar" id="exampleInputPassword1" placeholder="Enter Aadhar No" value="{{data.aadhar}}">
                      {{#if errors}}
                      <small id="emailHelp" >{{errors.aadhar.msg}}</small>
                 {{/if}}
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Pan Card No.</label>
-                    <input type="text" class="form-control" name="pan" id="exampleInputPassword1" placeholder="Enter PanCard No">
+                    <input type="text" class="form-control" name="pan" id="exampleInputPassword1" placeholder="Enter PanCard No" value="{{data.pan}}">
                      {{#if errors}}
                      <small id="emailHelp" >{{errors.pan.msg}}</small>
                 {{/if}}
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Passport No.</label>
-                    <input type="text" class="form-control" name="passport" id="exampleInputPassword1" placeholder="Enter Passport No">
+                    <input type="text" class="form-control" name="passport" id="exampleInputPassword1" placeholder="Enter Passport No" value="{{data.passport}}">
                      {{#if errors}}
                      <small id="emailHelp" >{{errors.passport.msg}}</small>
                 {{/if}}
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">GST No.</label>
-                    <input type="text" class="form-control" name="gst" id="exampleInputPassword1" placeholder="Enter GST No">
+                    <input type="text" class="form-control" name="gst" id="exampleInputPassword1" placeholder="Enter GST No" value="{{data.gst}}">
                      {{#if errors}}
                      <small id="emailHelp" >{{errors.gst.msg}}</small>
+                {{/if}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Indian Mobile No.</label>
+                    <input type="text" class="form-control" name="indianNo" id="exampleInputPassword1" placeholder="Enter Indian Mob. No" value="{{data.indianNo}}">
+                     {{#if errors}}
+                     <small id="emailHelp" >{{errors.indianNo.msg}}</small>
                 {{/if}}
                 </div><br>
                 <div class="form-group">

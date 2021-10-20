@@ -3,41 +3,40 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongoose');
-var exphbs=require('express-handlebars');
+var mongoose=require('mongoose');
 var session = require('express-session');
+const fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var jqueryRouter = require('./routes/jquery');
-
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars',exphbs({
-  defaultLayout:'main'
-}));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge:
-  60000 }}));
+app.use(fileUpload());
 
-//Db Connection
-mongoose.connect('mongodb://exp-validator:exp-validator@localhost:27017/exp-validator')
-.then(() => console.log('Connection Successfully'))
-.catch((err) => console.log(err))
+//db connection
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://login-forget:login-forget@localhost:27017/login-forget', { useNewUrlParser: true })
+.then(() => console.log('connection succesful'))
+.catch((err) => console.error(err))
 //db connection end
+app.use(session({ 
+  secret: 'keyboard cat', 
+  cookie: { maxAge: 60000 },
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/jquery', jqueryRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

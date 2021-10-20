@@ -5,7 +5,7 @@ var UserModel=require('../schema/form');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('jquery', { title: 'Express' });
 });
 
 router.get('/form', function(req, res, next) {
@@ -17,7 +17,7 @@ router.get('/form', function(req, res, next) {
   req.session.errors = null;
 });
 
-router.post('/form-process',[
+router.post('/form',[
   check('email','Email is Required').isEmail().withMessage('Not Proper Email Formate')
     .isLength({ min: 15, max: 30 }).withMessage('Email length should be 10 to 30 characters'),
   check('name', 'Name length should be 4 to 20 characters')
@@ -41,16 +41,12 @@ router.post('/form-process',[
 
   const errors = validationResult(req).mapped();
   console.log(errors);
-  console.log(req.body);
-  console.log(req.body.name);
-      if(Object.keys(errors).length){
+      if(errors){
           req.session.errors=errors;
          req.session.success = false;
-         res.render('form', {errors: errors,data:req.body});
+         res.render('form', {errors: errors});
         //res.redirect('/form');
       }
-
-    
     //   if (!errors.isEmpty()) {
     //     return res.status(400).json({
     //         success: false,
@@ -65,27 +61,27 @@ router.post('/form-process',[
     // })
     else{
             req.session.success = true;
-            const mybodydata=({
-              name: req.body.name,
-              email: req.body.email,
-              mobile: req.body.mobile,
-              password: req.body.password,
-              aadhar: req.body.aadhar,
-              pan: req.body.pan,
-              passport: req.body.passport,
-              gst: req.body.gst,
-              indianNo: req.body.indianNo, 
-            });
-            var data=UserModel(mybodydata);  
-            data.save(function(err,data){
-              if(err){
-                console.log("error in insertion data signup" +err);
-              }
-              else{
-                console.log("insertion data signup successfull" +data);
-                res.redirect('/login');
-              }
-            });
+            // const mybodydata=({
+            //   name: req.body.name,
+            //   email: req.body.email,
+            //   mobile: req.body.mobile,
+            //   password: req.body.password,
+            //   aadhar: req.body.aadhar,
+            //   pan: req.body.pan,
+            //   passport: req.body.passport,
+            //   gst: req.body.gst,
+            //   indianNo: req.body.indianNo, 
+            // });
+            // var data=UserModel(mybodydata);  
+            // data.save(function(err,data){
+            //   if(err){
+            //     console.log("error in insertion data signup" +err);
+            //   }
+            //   else{
+            //     console.log("insertion data signup successfull" +data);
+            //     res.redirect('/login');
+            //   }
+            // });
       res.send("Successfully validated")
       }
 });

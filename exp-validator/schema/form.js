@@ -6,6 +6,11 @@ var myschema=new Schema({
     mobile:Number,
    password:String,
    cpassword:String,
+   aadhar:Number,
+   pan:String,
+   passport:String,
+   gst:String,
+   indianNo:String,
     
 });
 module.exports=mongoose.model('user-validation',myschema);

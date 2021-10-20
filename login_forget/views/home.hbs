@@ -1,0 +1,13 @@
+<a href="signup">Signup</a>  |
+<a href="login">Login</a>   |
+<a href="home">Home</a>  |
+<a href="change-password">Change Password</a>   |
+<a href="display-table">Display Table</a>  
+{{#if myemail}}
+ <h1>Hi,{{myemail}}</h1>
+ <a href="/change-password">Change Password</a> 
+        <a href="/logout">Logout</a> </h1>
+
+{{else}}
+  <h1><a href="/login">Login</a></h1>
+{{/if}}

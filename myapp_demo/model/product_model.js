@@ -7,5 +7,10 @@ var myschema=new Schema({
     product_price:Number,
     product_image:String,
     product_quality:String,
+    _category:
+        {
+          type: mongoose.Schema.Types.ObjectId, 
+          ref: 'category'
+        }
 });
 module.exports=mongoose.model('product',myschema);
