@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { check, validationResult } = require('express-validator');
+const { check, validationResult, body } = require('express-validator');
 var UserModel=require('../schema/form');
 
 /* GET home page. */
@@ -9,33 +9,90 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/form', function(req, res, next) {
-  // var success=req.session.success;
-  // var errors=req.session.errors;
-  // var name_error=errors.name.msg;
-  // console.log("aman"+name_error);
   res.render('form', {success: req.session.success,errors: req.session.errors});
   req.session.errors = null;
 });
 
-router.post('/form-process',[
-  check('email','Email is Required').isEmail().withMessage('Not Proper Email Formate')
-    .isLength({ min: 15, max: 30 }).withMessage('Email length should be 10 to 30 characters'),
-  check('name', 'Name length should be 4 to 20 characters')
-    .isLength({ min: 4, max: 20 }),
+router.post('/form-process',
+[
+  check('email')
+  .notEmpty().withMessage('Email is Required')
+    .isLength({ min: 10, max: 30 }).withMessage('Email length should be 10 to 30 characters')
+    .isEmail().withMessage('Please enter a valid email address')
+    .custom((value, {req}) => {
+      return new Promise((resolve, reject) => {
+        UserModel.findOne({email:req.body.email}, function(err, data){
+          if(err) {
+            reject(new Error('Server Error'))
+          }
+          if(Boolean(data)) {
+            reject(new Error('E-mail already in use'))
+          }
+          resolve(true)
+        });
+      });
+    }),
+  check('name')
+  .notEmpty().withMessage('Name is Required')
+    .isLength({ min: 4, max: 20 }).withMessage('Name length should be 4 to 20 characters').trim(),
   check('mobile', 'Mobile number should contains 10 digits')
+  .notEmpty().withMessage('Mobile No is Required')
     .isLength({ min: 10, max: 10 }),
-  // check('password', 'Password length should be 5 to 10 characters')
-  //   .isLength({ min: 5, max: 10 }),
-  check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long")
-  .isStrongPassword({ minLength: 8,
-    minLowercase:1,
-    minUppercase:1,
-    minNumbers:1}),
-  check('aadhar').matches('^[2-9]{1}[0-9]{11}$').withMessage("Invalid Aadhar number"),
-  check('pan').matches('[A-Z]{5}[0-9]{4}[A-Z]{1}').withMessage("Invalid Pancard number"),
-  check('passport').matches('^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$').withMessage("Invalid Passport number"),
-  check('gst').matches('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$').withMessage("Invalid GST number"),
-  check('indianNo').matches('^[+91]{3}[6-9]{1}[0-9]{9}$').withMessage("Invalid Indian Mob. Number"),
+  check('password')
+  .not().isEmpty().withMessage('password is required') 
+   .isStrongPassword({
+      minlength:8,
+      minLowercase:1,
+      maxLowercase:1,
+      minNumbers:1
+   }),
+  // .isLength({min: 8}).withMessage('Password length at least 8 characters')
+  // .isLength({max: 20}).withMessage('Password length maximum at most 20 characters')
+  // .isLowercase({min:1}).withMessage('password should contain lowercase'),
+  // .isUppercase({minUppercase:1}).withMessage('password should contain uppercase')
+  // .isNumber({minNumbers:1}).withMessage('password should contain an Number'),
+  //let s=password.split('')
+  // throw new Error('password should contain uppercase');
+  // throw new Error('password should contain lowercase'); 
+  // throw new Error('password should contain a Number');
+  // .custom((value, { req }) => {
+  // //function solution(s) {
+  //   let s=password.split('') 
+  // var c = s[0];
+    
+  //   if (c == c.toUpperCase() && !(c >= '0' && c <= '9') &&(c >='A' && c <= 'Z')) {
+  //     throw new Error('password should contain uppercase');
+  //       //return 'upper';
+  //   } else if (c == c.toLowerCase() && !(c >= '0' && c <= '9') &&(c >='a' && c <= 'z')){
+  //     throw new Error('password should contain lowercase');   
+  //     //return 'lower';
+  //   } else if (c >= '0' && c <= '9'){
+  //     throw new Error('password should contain a Number');
+  //      //return 'digit'
+  //   } else {
+  //     return true; 
+  //   }
+  //   }), 
+  check('cpassword')
+  .not().isEmpty().withMessage('confirm password is required')
+  .custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Confirm Password does not match password');
+    }
+
+    // Indicates the success of this synchronous custom validator
+    return true;
+  }),
+  check('aadhar').not().isEmpty().withMessage('Aadhar No. is required')
+    .matches('^[2-9]{1}[0-9]{11}$').withMessage("Invalid Aadhar number"),
+  check('pan').not().isEmpty().withMessage('Pancard No. is required')
+    .matches('[A-Z]{5}[0-9]{4}[A-Z]{1}').withMessage("Invalid Pancard number"),
+  check('passport').not().isEmpty().withMessage('Passport No. is required')
+    .matches('^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$').withMessage("Invalid Passport number"),
+  check('gst').not().isEmpty().withMessage('GST No. is required')
+    .matches('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$').withMessage("Invalid GST number"),
+  check('indianNo').not().isEmpty().withMessage('indian Mobile No. is required')
+    .matches('^[+91]{3}[6-9]{1}[0-9]{9}$').withMessage("Invalid Indian Mob. Number"),
  
 ], function(req, res, next) {
 
@@ -44,32 +101,22 @@ router.post('/form-process',[
   console.log(req.body);
   console.log(req.body.name);
       if(Object.keys(errors).length){
-          req.session.errors=errors;
-         req.session.success = false;
-         res.render('form', {errors: errors,data:req.body});
+        //   req.session.errors=errors;
+        //  req.session.success = false;
+        //  res.render('form', {errors: errors,data:req.body});
+        return res.send(errors);
         //res.redirect('/form');
       }
-
-    
-    //   if (!errors.isEmpty()) {
-    //     return res.status(400).json({
-    //         success: false,
-    //         errors: errors.array()
-    //         //console.log("aman"+errors)
-    //     });
-    //   }
-
-    // res.status(200).json({
-    //     success: true,
-    //     message: 'Login successful',
-    // })
     else{
+      console.log("else");
             req.session.success = true;
+            
             const mybodydata=({
               name: req.body.name,
               email: req.body.email,
               mobile: req.body.mobile,
               password: req.body.password,
+              cpassword: req.body.cpassword,
               aadhar: req.body.aadhar,
               pan: req.body.pan,
               passport: req.body.passport,
@@ -77,16 +124,21 @@ router.post('/form-process',[
               indianNo: req.body.indianNo, 
             });
             var data=UserModel(mybodydata);  
-            data.save(function(err,data){
+            data.save(function(err){
               if(err){
                 console.log("error in insertion data signup" +err);
+                return  res.send(JSON.stringify({'flag':0,'message':'error in api signup','err':err}));
+                
               }
               else{
-                console.log("insertion data signup successfull" +data);
-                res.redirect('/login');
+                console.log("insertion data signup successfull" +data);          
+               return res.send(JSON.stringify({'flag':1,'message':'record added'}))
+                // res.redirect('/login');
               }
             });
-      res.send("Successfully validated")
+            console.log("hello aman");
+            //res.send(JSON.stringify({'flag':1,'message':'record added'}))
+     //res.send("Successfully validated");
       }
 });
 
