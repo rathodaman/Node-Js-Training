@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <style>
+            table 
+            {
+                counter-reset: tableCount;
+            }
+            .counterCell:before 
+            {
+                content: counter(tableCount); 
+                counter-increment: tableCount; 
+            }
+        </style>
+    </head>
+<body>
+    <a href="add-form">Add Record</a> |
+<a href="display-user">Show Record</a> |
+<a href="/category/add">Add Category</a> |
+<a href="/category/display">Show Category</a> |
+<a href="/subcategory/add">Add SubCategory</a> |
+<a href="/subcategory/display">Show SubCategory</a> 
+    <h1>Display Table</h1>
+    <table border='1' cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Action</th>
+        </tr>
+
+            {{#each user_array}}
+        <tr>
+           <td class="counterCell"></td>
+            <td>{{user_name}}</td>
+            <td>{{user_mobile}}</td>
+            
+            <td>
+                    <a href='/edit/{{_id}}'>Edit</a> | 
+                    <a href='/delete/{{_id}}'>Delete</a> |
+                    <a href='/show/{{_id}}'>Show</a>
+          
+          </td>
+        </tr>
+        {{else}}
+        No Record Found
+       
+    </table>
+    
+    {{/each}}
+</body>
+</html>
