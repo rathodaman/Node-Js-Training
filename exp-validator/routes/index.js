@@ -16,7 +16,7 @@ router.get('/form', function(req, res, next) {
 router.post('/form-process',
 [
   check('email')
-  .notEmpty().withMessage('Email is Required')
+  .notEmpty().withMessage('Email is Required').trim().escape().normalizeEmail()
     .isLength({ min: 10, max: 30 }).withMessage('Email length should be 10 to 30 characters')
     .isEmail().withMessage('Please enter a valid email address')
     .custom((value, {req}) => {
@@ -33,13 +33,13 @@ router.post('/form-process',
       });
     }),
   check('name')
-  .notEmpty().withMessage('Name is Required')
-    .isLength({ min: 4, max: 20 }).withMessage('Name length should be 4 to 20 characters').trim(),
+  .notEmpty().withMessage('Name is Required').trim().escape()
+    .isLength({ min: 4, max: 20 }).withMessage('Name length should be 4 to 20 characters'),
   check('mobile', 'Mobile number should contains 10 digits')
   .notEmpty().withMessage('Mobile No is Required')
     .isLength({ min: 10, max: 10 }),
   check('password')
-  .not().isEmpty().withMessage('password is required') 
+  .not().isEmpty().withMessage('password is required') .trim()
    .isStrongPassword({
       minlength:8,
       minLowercase:1,
@@ -74,7 +74,7 @@ router.post('/form-process',
   //   }
   //   }), 
   check('cpassword')
-  .not().isEmpty().withMessage('confirm password is required')
+  .not().isEmpty().withMessage('confirm password is required').trim().escape()
   .custom((value, { req }) => {
     if (value !== req.body.password) {
       throw new Error('Confirm Password does not match password');
@@ -101,10 +101,11 @@ router.post('/form-process',
   console.log(req.body);
   console.log(req.body.name);
       if(Object.keys(errors).length){
+        let data=req.body;
         //   req.session.errors=errors;
         //  req.session.success = false;
         //  res.render('form', {errors: errors,data:req.body});
-        return res.send(errors);
+        return res.send(errors,data);
         //res.redirect('/form');
       }
     else{
@@ -138,7 +139,7 @@ router.post('/form-process',
             });
             console.log("hello aman");
             //res.send(JSON.stringify({'flag':1,'message':'record added'}))
-     //res.send("Successfully validated");
+     res.send("Successfully validated");
       }
 });
 
