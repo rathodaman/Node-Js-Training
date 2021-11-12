@@ -6,7 +6,7 @@ var mySchema = new Schema({
     LastName : String,
     interest : String,
     gender : String,
-    hobby : String,
+    hobby : [{type: String,}],
     address : String,
     image : String,
 })

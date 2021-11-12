@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../bootstrap.css">
     <script src="../jquery.js"></script>
     <script src="../bootstrap.js"></script>
-    <script src="../validate.js"></script>
+   
 </head>
 <body>
     <section class=" gradient-custom">
@@ -18,21 +18,19 @@
       <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 formName"><b>User Registration Form</b></h3>
-             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 UpdateformName" style="display:none;"><b>Update Form</b></h3>
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5"><b>Registration Form</b></h3>
             <form method="post" id="signupForm" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <input type="text" id="firstName" class="form-control form-control-lg" name="fname" id="fname" placeholder="First Name"/>
-                    <input type="hidden" name="userId" id="userId" value="">
+                    <input type="text" id="fname" class="form-control form-control-lg" name="fname" placeholder="First Name"/>
                   </div>
 
                 </div>
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="lastName" class="form-control form-control-lg" id="lname" name="lname"placeholder="Last Name"/>
+                    <input type="text" id="lname" class="form-control form-control-lg" name="lname"placeholder="Last Name"/>
                   </div>
 
                 </div>
@@ -56,16 +54,16 @@
                  <div class="col-md-6 mb-4">
                   <h6 class="mb-2 pb-1">Gender: </h6>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="female"/>
+                    <input class="form-check-input" type="radio" name="gender" id="gender" value="female"/>
                     <label class="form-check-label" for="femaleGender">Female</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="maleGender" value="male"/>
+                    <input class="form-check-input" type="radio" name="gender" id="gender" value="male"/>
                     <label class="form-check-label" for="maleGender">Male</label>
                   </div>
 
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="otherGender" value="option3" />
+                    <input class="form-check-input" type="radio" name="gender" id="gender" value="option3" />
                     <label class="form-check-label" for="otherGender">Other</label>
                   </div>
                 </div>
@@ -74,19 +72,19 @@
                 <div class="row col-12">
                     <label>Hobbies: - </label>&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="Node Js"  name="hobby" id="hobby">
+                        <input class="form-check-input" type="checkbox" value="Node Js" id="hobby" name="hobby">
                         <label class="form-check-label" for="flexCheckChecked">Node Js</label>
                     </div>&nbsp;&nbsp;
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="MongoDB" name="hobby">
+                        <input class="form-check-input" type="checkbox" value="MongoDB" id="hobby" name="hobby2">
                         <label class="form-check-label" for="flexCheckChecked">MongoDB</label>
                     </div>&nbsp;&nbsp;
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="Express" name="hobby">
+                        <input class="form-check-input" type="checkbox" value="Express" id="hobby" name="hobby3">
                         <label class="form-check-label" for="flexCheckChecked">Express</label>
                     </div>&nbsp;&nbsp;
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="Angular" name="hobby">
+                        <input class="form-check-input" type="checkbox" value="Angular" id="hobby" name="hobby4">
                         <label class="form-check-label" for="flexCheckChecked">Angular</label>
                     </div>
                     <div id="result"></div>
@@ -106,14 +104,12 @@
                         <h6 class="mb-0">Upload Image</h6>
                     </div>
                     <div class="col-md-9 pe-5">
-                        <input class=" form-control-lg" id="formFileLg" id="image" type="file" name="image"/>
+                        <input class=" form-control-lg" id="formFileLg" type="file" id="image" name="image"/>
                     </div>
                 </div>
 
               <div class="mt-4 pt-2">
                 <input class="btn btn-primary btn-lg" type="submit" id="submit"/>
-                <input class="btn btn-primary btn-lg" style="display: none;" type="button" value="Update" id="update"/>
-                <input class="btn btn-primary btn-lg" style="display: none;" type="reset" value="Reset" id="reset"/>
               </div>
             </form>
           </div>
@@ -121,10 +117,8 @@
       </div>
     </div>
   </div>
-<div id="dynamic">
-  {{> table}}
-</div>
 </section>
+ <script src="../validate.js"></script>
   <script>
             $("document").ready(function(){
                		// validate signup form on keyup and submit
@@ -140,14 +134,15 @@
                     },
                     gender: {
                       required: true,
+                      //if($('input[type=radio][name=gender]:checked').length == 0)
                     },
                     hobby: {
                       required: true,
                     },
                     address: {
                       required: true,
-                      minlength: 4,
-                      maxlength: 80
+                      minlength: 10,
+                      maxlength: 150
                     },
                     image:{
                         required: true
@@ -156,9 +151,9 @@
                   },
                   messages: {
                     fname:{
-                      required: "Please enter your firstname",
-                      minlength: "Your firstname must consist of at least 3 characters"
-                    },
+                            required: "Please enter your firstname",
+                            minlength: "Your firstname must consist of at least 3 characters"
+                          },
                     lname: "Please enter your lastname",
                     interest: "Please choose your interest",
                     gender: "select Gender",
@@ -184,71 +179,13 @@
                         async: false,
                         type: 'POST',
                         data: data,
-                        /* success: function(data){
-                        if(data.status == "success"){
-                            $.each(data, function(key, value){
-                              $("#table").append("<tr><td>"+value.fname+"</td><td>"+value.gender+"</td><td>"+value.address+"</td>"+"<td><img src=/images/"+mydata.image+" height=100></td>"+"<td><a href=/editprod/{{_id}}>Edit</a> | <a class=delete href=# data-id="+data.id+">Delete</a></td></tr>");
-                            })
-                        }else {
-                            //show error
-                            console.log(Error);
-                        }
-                      },
-                    });
-                  }, */
                         success: function(signupForm,status){
-                          alert("Success")
-                          $('#dynamic').load(location.href.replace('form','users'))
-                            $('#signupForm')[0].reset();
+                          alert(signupForm);
                         }
                       })
                     }
                 });
-              $('.delete').click(function(){
-                  console.log("hello aman");
-                  let userdata=$(this).data('id');
-                  $.ajax({
-                    url:'/delete/'+userdata+'',
-                    type:'GET',
-                    success: function(data){
-                        $('#'+userdata).remove();
-                    }
-                  })
-                });
-              $('.edit').click(function(){
-                console.log("hello aman");
-                $('#submit').hide();
-                $('#update').show();
-                $('#reset').show();
-                $('.formName').hide();
-                $('.UpdateformName').show();
-                let userdata=($(this)).data('id');
-                console.log(userdata)
-                 $.ajax({
-                    url:'/'+userdata,
-                    type:'GET',
-                    success: function(data){
-                      let mydata = data.data;
-                      console.log(data);
-                        //$('#'+userdata).remove();
-                          $('#fname').val($(this).data('firstName'))
-                          $('#lname').val($(this).data('lastName'))
-                          $('#interest').val($(this).data('interest'))
-                          $('#gender').val($(this).data('gender'))
-                          $('#hobby').val($(this).data('hobby'))
-                          $('#address').val($(this).data('address'))
-                          $('#image').val($(this).data('image'))
-                    }
-                  })
-              })
-                $('#reset').click(function(){
-                      $('#submit').show();
-                      $('#update').hide();
-                      $('#reset').hide();
-                      $('.formName').show();
-                      $('.UpdateformName').hide();
-                })
-            }); 
+            });
   </script>
 </body>
 </html>

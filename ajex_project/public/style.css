@@ -18,3 +18,21 @@
 .card-registration .select-arrow {
   top: 13px;
 }
+
+.error{
+  color: red;
+}
+
+.table{
+  width: 70% !important;
+  border-color: aqua;
+  background-color:azure;
+}
+
+table {
+  counter-reset: tableCount;
+}
+.counterCell:before {
+  content: counter(tableCount); 
+  counter-increment: tableCount; 
+}

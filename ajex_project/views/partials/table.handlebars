@@ -1,0 +1,39 @@
+<table class="table" id="table" border="1" cellpadding="5" cellspacing="0" align="center">
+  <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each userdata}}
+      <tr id="{{_id}}">
+        <td class="counterCell"></td>
+        <td>{{firstName}}</td>
+        <td>{{gender}}</td>
+        <td>{{address}}</td>
+        <td>
+             <img src="/images/{{image}}" width="150px">
+        </td>
+        <td>
+            <button data-id="{{_id}}" class="edit">Edit</button>
+            <button data-id="{{_id}}" class="delete">Delete</button>
+        </td>
+    </tr>
+    {{/each}}
+  </tbody>
+  <tfoot>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+  </tfoot>   
+</table>

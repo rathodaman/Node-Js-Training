@@ -9,7 +9,16 @@ router.get('/', function(req, res, next) {
 
 /* GET home page. */
 router.get('/form', function(req, res, next) {
-  res.render('form');
+  UserModel.find(function(err, db_users_array) {
+    if (err) {
+        console.log("Error in Fetch Data " + err);
+      } else {
+        //Print Data in Console
+        console.log(db_users_array);
+        //Render User Array in HTML Table
+        res.render('form',{ userdata : db_users_array });  
+      }
+  }).lean()
 });
 
 /* User Registration page */
@@ -37,10 +46,53 @@ data.save(function(err){
         console.log("file uploaded");  
       });
         console.log("user Insert Successfully"+ data);
-            res.redirect('/form');    
+            //res.send('successfull'); 
+            res.json(data);   
     }
 })
 });
+
+//replace code
+router.get('/users', function(req, res, next) {
+  UserModel.find(function(err, db_users_array) {
+  if (err) {
+      console.log("Error in Fetch Data " + err);
+    } else {
+      //Print Data in Console
+      console.log(db_users_array);
+      //Render User Array in HTML Table
+      res.render('partials/table',{ userdata : db_users_array });  
+    }
+}).lean()
+});
+
+//delete using ajax
+router.get('/delete/:id', function(req, res, next) {
+  var deleteid=req.params.id;
+  UserModel.findByIdAndDelete(deleteid,function(err,data){
+    if(err){
+      console.log("error in Delete user"+err)
+    }
+    else{
+      console.log("user data Deleted"+data);
+     res.redirect('/form');
+    }
+  });
+});
+
+//update using ajax
+router.get('/:id', function(req, res, next) {
+  var editid=req.params.id;
+  UserModel.findById(editid,function(err,data){
+    if(err){
+      console.log("error in update" + err);
+    }
+    else{
+      console.log("admin Data updated Successfully" + data);
+      res.json({data:data});
+    }
+  })
+ });
 
 //display Users Details
 router.get('/display', function(req, res, next) {
