@@ -8,161 +8,104 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET home page. */
-router.get('/form', function(req, res, next) {
-  UserModel.find(function(err, db_users_array) {
-    if (err) {
-        console.log("Error in Fetch Data " + err);
-      } else {
-        //Print Data in Console
-        console.log(db_users_array);
-        //Render User Array in HTML Table
-        res.render('form',{ userdata : db_users_array });  
-      }
-  }).lean()
+router.get('/form',async function(req, res, next) {
+  try {
+        let data = await UserModel.find().lean();
+        res.render('form',{ userdata : data });
+  } catch (e) {
+        console.log(e);
+        res.json({status : "error"})
+  }
 });
 
-/* User Registration page */
+/* User Registration page post */
 router.post('/form', function(req, res, next) {
-  var fileobj=req.files.image
-  var filename=req.files.image.name
-  console.log(req.files.image);
-  const mybodydata = {
-    firstName : req.body.fname,
-    LastName : req.body.lname,
-    interest : req.body.interest,
-    gender : req.body.gender,
-    hobby : req.body.hobby,
-    address : req.body.address,
-    image : filename
-}
-var data = UserModel(mybodydata);
-data.save(function(err){
-    if(err){
-        console.log("Error in Insert user"+err);
-    }else{
-      fileobj.mv("public/images/"+filename,function(err){
-        if(err)
-        return res.status(500).send(err);
-        console.log("file uploaded");  
-      });
-        console.log("user Insert Successfully"+ data);
-            //res.send('successfull'); 
-            res.json(data);   
-    }
-})
+  try {
+    var fileobj=req.files.image
+    var filename=req.files.image.name
+    console.log(req.files.image);
+    fileobj.mv("public/images/"+filename,async function(err){
+      if(err) throw err;
+      console.log("file uploaded");
+      const mybodydata = {
+        firstName : req.body.fname,
+        LastName : req.body.lname,
+        interest : req.body.interest,
+        gender : req.body.gender,
+        hobby : req.body.hobby,
+        address : req.body.address,
+        image : filename
+      }
+      let data = await UserModel.create(mybodydata);
+      res.json({status : "success", data:data});
+    }) 
+  } catch (error) {
+      res.json({status:"error"});
+  }
 });
 
 //replace code
-router.get('/users', function(req, res, next) {
-  UserModel.find(function(err, db_users_array) {
-  if (err) {
-      console.log("Error in Fetch Data " + err);
-    } else {
-      //Print Data in Console
-      console.log(db_users_array);
-      //Render User Array in HTML Table
-      res.render('partials/table',{ userdata : db_users_array });  
+router.get('/users',async function(req, res, next) {
+  try {
+        let data = await UserModel.find().lean();
+        res.render('partials/table',{ userdata : data });
+    } catch (e) {
+        console.log(e);
+        res.json({status : "error"})
     }
-}).lean()
 });
 
 //delete using ajax
-router.get('/delete/:id', function(req, res, next) {
-  var deleteid=req.params.id;
-  UserModel.findByIdAndDelete(deleteid,function(err,data){
-    if(err){
-      console.log("error in Delete user"+err)
-    }
-    else{
-      console.log("user data Deleted"+data);
-     res.redirect('/form');
-    }
-  });
-});
-
-//update using ajax
-router.get('/:id', function(req, res, next) {
-  var editid=req.params.id;
-  UserModel.findById(editid,function(err,data){
-    if(err){
-      console.log("error in update" + err);
-    }
-    else{
-      console.log("admin Data updated Successfully" + data);
-      res.json({data:data});
-    }
-  })
- });
-
-//display Users Details
-router.get('/display', function(req, res, next) {
-  UserModel.find(function(err, db_users_array) {
-  if (err) {
-      console.log("Error in Fetch Data " + err);
-    } else {
-      //Print Data in Console
-      console.log(db_users_array);
-      //Render User Array in HTML Table
-      res.render('display',{ userdata : db_users_array });  
-    }
-}).lean()
-});
-
-router.get('/delete/:id', function(req, res, next) {
-  var deleteid=req.params.id;
-  UserModel.findByIdAndDelete(deleteid,function(err,data){
-    if(err){
-      console.log("error in Delete user"+err)
-    }
-    else{
-      console.log("user data Deleted"+data);
-     res.redirect('/display');
-    }
-  });
-});
-
-router.get('/edit/:id', function(req, res, next) {
-  var editid=req.params.id;
-  UserModel.findById(editid,function(err,data){
-    if(err){
-      console.log("error in update" + err);
-    }
-    else{
-      console.log("admin Data updated Successfully" + data);
-      res.render('edit',{editdata:data});
-    }
-  })
- });
-
- router.post('/edit/:id', function(req, res, next) {
-  var fileobj=req.files.image
-  var filename=req.files.image.name
-  console.log(req.files.image);
-
-  var editid=req.params.id;
-  const mybodydata={
-    firstName : req.body.fname,
-    LastName : req.body.lname,
-    interest : req.body.interest,
-    gender : req.body.gender,
-    hobby : req.body.hobby,
-    address : req.body.address,
-    image : filename
+router.delete('/:id',async function(req, res, next) {
+  try {
+        var deleteid=req.params.id;
+        let data = await UserModel.findByIdAndDelete(deleteid);
+        res.json({status:"data remove successfully"});
+  } catch (e) {
+        console.log(e);
+        res.json({status : "error"})
   }
-  UserModel.findByIdAndUpdate(editid,mybodydata,function(err,data){
-    if(err){
-      console.log("error in update user data"+err);
+});
+
+//update using ajax GET
+router.get('/edit/:id',async function(req, res, next) {
+  try {
+        var editid=req.params.id;
+        let data = await UserModel.findById(editid).lean();
+        res.json(data);
+    } catch (e) {
+        console.log(e);
+        res.json({status : "error"})
     }
-    else{
-      fileobj.mv("public/images/"+filename,function(err){
-        if(err)
-        return res.status(500).send(err);
-        console.log("file uploaded");  
-      });
-      console.log("user data updated"+data);
-     res.redirect('/display');
-    }
-  });
+});
+
+//update using ajax PUT
+router.put('/:id',async function(req, res, next) {
+  try {
+        var editid=req.params.id;
+        const mybodydata={
+          firstName : req.body.fname,
+          LastName : req.body.lname,
+          interest : req.body.interest,
+          gender : req.body.gender,
+          hobby : req.body.hobby,
+          address : req.body.address
+        }
+        if(req.files && req.files.image){
+          var fileobj = req.files.image;
+          var filename = req.files.image.name;
+          fileobj.mv('public/images/'+filename, function(err) {
+            if(err) throw err;
+            console.log("file uploaded");
+          })
+           mybodydata.image = filename;
+        }
+        let data = await UserModel.findByIdAndUpdate(editid,mybodydata);
+        res.json({status : "success", data:data});
+  } catch (e) {
+        console.log(e);
+        res.json({status : "error"})
+  }
 });
 
 module.exports = router;
