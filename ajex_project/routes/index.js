@@ -47,7 +47,17 @@ router.post('/form', function(req, res, next) {
 //replace code
 router.get('/users',async function(req, res, next) {
   try {
-        let data = await UserModel.find().lean();
+        let condition = {};
+        if(req.query.search){
+          
+          condition={$or: [
+{firstName: req.query.search},{LastName: req.query.search},{address: req.query.search}
+                    ]}
+        }
+        if(req.query.gender){
+          condition.gender = req.query.gender;
+        }
+        let data = await UserModel.find(condition).lean();
         res.render('partials/table',{ userdata : data });
     } catch (e) {
         console.log(e);

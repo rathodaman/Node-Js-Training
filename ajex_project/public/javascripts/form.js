@@ -125,27 +125,39 @@ $("document").ready(function(){
           //console.log(45454)
           $('.image').html('');
         })
-        // $(document).on('click', '#update', function () {      
-        //         var id = $(this).data('id')
-        //         console.log("id")
-        //         console.log(id)
-        //         let formdata = new FormData($("#signupForm")[0]);
-        //         $.ajax({
-        //           type: 'put',
-        //           url: '/' + id,
-        //           data: formdata,
-        //           enctype: "multipart/form-data",
-        //           dataType: 'json',
-        //           processData: false,
-        //           contentType: false,
-        //           success: function(data){
-        //              alert("Update Successful")
-        //                   $('#dynamic').load(location.href.replace('form','users'));
-        //           },
-        //           error: function(err){
-        //             console.log(err);
-        //           }
-        //         });
-        // });
+        $(document).on('click', '#update', function () {      
+                var id = $(this).data('id')
+                console.log("id")
+                console.log(id)
+                let formdata = new FormData($("#signupForm")[0]);
+                $.ajax({
+                  type: 'put',
+                  url: '/' + id,
+                  data: formdata,
+                  enctype: "multipart/form-data",
+                  dataType: 'json',
+                  processData: false,
+                  contentType: false,
+                  success: function(data){
+                     alert("Update Successful")
+                          $('#dynamic').load(location.href.replace('form','users'));
+                  },
+                  error: function(err){
+                    console.log(err);
+                  }
+                });
+        });
+        $(document).on('click', '#table-search', function () {      
+                console.log("id")
+                const href = location.href.replace('form','users')+'?' + $("#searchForm").serialize();
+                console.log(href)
+                $('#dynamic').load(href)
+                //$('#dynamic').load(location.href.replace('form','users'));
+                //console.log(id)
+               //let formdata = new FormData($("#searchForm")[0]);
+        });
+        $(document).on('click', '#table-reset', function () {
+          $('#dynamic').load(location.href.replace('form','users'));
+        })
 }); 
             

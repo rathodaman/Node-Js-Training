@@ -2,7 +2,8 @@
   <thead>
     <tr>
         <th>Id</th>
-        <th>Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Gender</th>
         <th>Address</th>
         <th>Image</th>
@@ -14,6 +15,7 @@
       <tr id="{{_id}}">
         <td class="counterCell"></td>
         <td>{{firstName}}</td>
+         <td>{{LastName}}</td>
         <td>{{gender}}</td>
         <td>{{address}}</td>
         <td>
@@ -23,8 +25,9 @@
             <button data-id="{{_id}}" class="edit">Edit</button>
             <button data-id="{{_id}}" class="delete">Delete</button>
         </td>
-    </tr>
-    {{/each}}
+    </tr> 
+   {{else}}Not Record Found
+  {{/each}}
   </tbody>
   <tfoot>
       <tr>
