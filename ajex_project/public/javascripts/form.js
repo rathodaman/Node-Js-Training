@@ -149,15 +149,33 @@ $("document").ready(function(){
         });
         $(document).on('click', '#table-search', function () {      
                 console.log("id")
+                //const href = location.href.replace('form','users')+'?' + $("#searchForm").serialize();
                 const href = location.href.replace('form','users')+'?' + $("#searchForm").serialize();
+                console.log("href"+href);
                 console.log(href)
-                $('#dynamic').load(href)
+                $('#dynamic').load(href);
                 //$('#dynamic').load(location.href.replace('form','users'));
                 //console.log(id)
                //let formdata = new FormData($("#searchForm")[0]);
         });
         $(document).on('click', '#table-reset', function () {
           $('#dynamic').load(location.href.replace('form','users'));
+        })
+        $(document).on('click', '.sortingHeader', function () {
+          let url = $(this).attr('data-url');
+          console.log("before");
+          console.log(url)
+          // let url1=location.href.replace('form','users') + url + '&' + $("#searchForm").serialize();
+          $('#dynamic').load(location.href.replace('form','users') + url + '&' + $("#searchForm").serialize());
+          console.log(location.href.replace('form','users') + url + '&' + $("#searchForm").serialize());
+          if(url.indexOf('asc') > 0){
+            url = url.replace('asc','desc');
+          } else if(url.indexOf('desc') > 0){
+            url = url.replace('desc','asc');
+          }
+          console.log(url)
+          console.log("after")
+          $(this).attr('data-url', url);
         })
 }); 
             

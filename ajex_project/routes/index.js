@@ -47,18 +47,55 @@ router.post('/form', function(req, res, next) {
 //replace code
 router.get('/users',async function(req, res, next) {
   try {
+        // For pagination
+      // let page = 1;
+      // let limit = 5;
+      // if (req.query.page) {
+      //     page = req.query.page;
+      // }
+      // let skip = limit * (page - 1);
+
+        val=1;
         let condition = {};
-        if(req.query.search){
-          
-          condition={$or: [
-{firstName: req.query.search},{LastName: req.query.search},{address: req.query.search}
-                    ]}
+        if(req.query){
+          console.log("aman rathod ");
+          console.log(req.query)
+          fieldname = req.query.fieldName;
+          console.log(fieldname);
+          let order=req.query.order;
+          search = req.query.search;
+          console.log("search"+ search);
+      
+          if(order =="asc"){
+            val=1;
+          }
+          if(order =="desc"){
+            val=-1;
+          }
         }
+
+        if(req.query.search){
+          condition={$or: [
+{firstName: req.query.search},{LastName: req.query.search},{address: req.query.search},{gender: req.query.search}
+                    ]}       
+        }
+        
         if(req.query.gender){
           condition.gender = req.query.gender;
         }
-        let data = await UserModel.find(condition).lean();
-        res.render('partials/table',{ userdata : data });
+        
+        let data = await UserModel.find(condition).lean().sort({[fieldname]:val});
+        //let data = await UserModel.find(condition).lean().sort({[fieldname]:val}).skip(skip).limit(limit);
+        //let totalData = await UserModel.countDocuments(condition);
+        res.render('partials/table',{
+          layout: 'blank', 
+          userdata : data
+          // pagination: {
+          //   page: page,
+          //   totalPage: Math.ceil(totalData / limit),
+          //   url: req.originalUrl
+          // }
+        });
     } catch (e) {
         console.log(e);
         res.json({status : "error"})

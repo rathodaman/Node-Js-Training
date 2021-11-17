@@ -138,6 +138,7 @@
             <div class="form-outline">
                 <select class="select form-control-lg" name="gender" id="gender">
                     <option value="Choose option" selected disabled>Choose option</option>
+                    <option value="">All</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -150,9 +151,33 @@
       </form>
   </div>
 
-<div id="dynamic">
-  {{> table}}
-</div>
+<table class="table" id="table" border="1" cellpadding="5" cellspacing="0" align="center">
+    <thead>
+      <tr>  
+          <th class="sortingHeader" data-url="?fieldName=id&order=asc">Id</th>
+          <th class="sortingHeader" data-url="?fieldName=firstName&order=asc">First Name</th>
+          <th class="sortingHeader" data-url="?fieldName=LastName&order=asc">Last Name</th>
+          <th class="sortingHeader" data-url="?fieldName=gender&order=asc">Gender</th>
+          <th class="sortingHeader" data-url="?fieldName=address&order=asc">Address</th>
+          <th>Image</th>
+          <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="dynamic">
+    {{> table}}
+    </tbody>
+    <tfoot>
+        <tr>
+          <th>Id</th>
+          <th class="sortingHeader" data-url="?fieldName=firstName&order=asc" name="firstName">First Name</th>
+          <th class="sortingHeader" data-url="?fieldName=LastName&order=asc">Last Name</th>
+          <th class="sortingHeader" data-url="?fieldName=gender&order=asc">Gender</th>
+          <th class="sortingHeader" data-url="?fieldName=address&order=asc">Address</th>
+          <th>Image</th>
+          <th>Action</th>
+      </tr>
+    </tfoot>   
+  </table>
 </section>
 </body>
 </html>

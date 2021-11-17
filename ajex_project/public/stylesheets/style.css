@@ -36,3 +36,7 @@ table {
   content: counter(tableCount); 
   counter-increment: tableCount; 
 }
+
+#else{
+  color: red;
+}
