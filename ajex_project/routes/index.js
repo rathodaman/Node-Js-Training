@@ -9,13 +9,62 @@ router.get('/', function(req, res, next) {
 
 /* GET home page. */
 router.get('/form',async function(req, res, next) {
+  // try {
+  //       let data = await UserModel.find().lean();
+  //       res.render('form',{ userdata : data });
+  // } catch (e) {
+  //       console.log(e);
+  //       res.json({status : "error"})
+  // }
   try {
-        let data = await UserModel.find().lean();
-        res.render('form',{ userdata : data });
-  } catch (e) {
-        console.log(e);
-        res.json({status : "error"})
+  // For pagination
+  let page = 1;
+  let limit = 3;
+  if (req.query.page) {
+      page = req.query.page;
   }
+  let skip = limit * (page - 1);
+
+  //For Sorting
+    val=1;
+    let condition = {};
+    let fieldname = 'firstName';
+    if(req.query.fieldName){
+      fieldname = req.query.fieldName;
+      console.log(fieldname);
+      if(req.query.order =="asc"){
+        val=1;
+      }
+      if(req.query.order =="desc"){
+        val=-1;
+      }
+    }
+  // For Searching
+    if(req.query.search){
+      condition={$or: [
+{firstName: req.query.search},{LastName: req.query.search},{address: req.query.search},{gender: req.query.search}
+                ]}       
+    }
+    
+  // for Gender Dropdown Searching
+    if(req.query.gender){
+      condition.gender = req.query.gender;
+    }
+    
+    let data = await UserModel.find(condition).lean().sort({[fieldname]:val}).skip(skip).limit(limit);
+    let totalData = await UserModel.countDocuments(condition);
+    res.render('form',{
+      userdata : data,
+      pagination: {
+        page: page,
+        totalPage: new Int8Array(Math.ceil(totalData / limit)).map((curr, index) => curr = index + 1),
+        url: req.originalUrl
+      }
+    });
+} catch (e) {
+    console.log(e);
+    res.json({status : "error"})
+}
 });
 
 /* User Registration page post */
@@ -44,57 +93,58 @@ router.post('/form', function(req, res, next) {
   }
 });
 
-//replace code
+//replace Users code
 router.get('/users',async function(req, res, next) {
   try {
-        // For pagination
-      // let page = 1;
-      // let limit = 5;
-      // if (req.query.page) {
-      //     page = req.query.page;
-      // }
-      // let skip = limit * (page - 1);
-
+      // For pagination
+      let page = 1;
+      let limit = 3;
+      if (req.query.page) {
+          page = req.query.page;
+          console.log(req.query.page);
+      }
+      let skip = limit * (page - 1);
+      
+      // For Sorting 
         val=1;
         let condition = {};
-        if(req.query){
-          console.log("aman rathod ");
-          console.log(req.query)
+        let fieldname = 'firstName';
+        if(req.query.fieldName){
           fieldname = req.query.fieldName;
           console.log(fieldname);
-          let order=req.query.order;
-          search = req.query.search;
-          console.log("search"+ search);
-      
-          if(order =="asc"){
+          if(req.query.order =="asc"){
             val=1;
           }
-          if(order =="desc"){
+          if(req.query.order =="desc"){
             val=-1;
           }
         }
 
+        // for Searching
         if(req.query.search){
           condition={$or: [
 {firstName: req.query.search},{LastName: req.query.search},{address: req.query.search},{gender: req.query.search}
                     ]}       
         }
         
+        // for Gender Dropdown Searching
         if(req.query.gender){
           condition.gender = req.query.gender;
         }
         
-        let data = await UserModel.find(condition).lean().sort({[fieldname]:val});
-        //let data = await UserModel.find(condition).lean().sort({[fieldname]:val}).skip(skip).limit(limit);
-        //let totalData = await UserModel.countDocuments(condition);
+        // let data = await UserModel.find(condition).lean().sort({[fieldname]:val});
+        let data = await UserModel.find(condition).lean().sort({[fieldname]:val}).skip(skip).limit(limit);
+        let totalData = await UserModel.countDocuments(condition);
+        console.log("totalData : - ")
+        console.log(totalData)
         res.render('partials/table',{
           layout: 'blank', 
-          userdata : data
-          // pagination: {
-          //   page: page,
-          //   totalPage: Math.ceil(totalData / limit),
-          //   url: req.originalUrl
-          // }
+          userdata : data,
+          pagination: {
+            page: page,
+            totalPage: new Int8Array(Math.ceil(totalData / limit)).map((curr, index) => curr = index + 1),
+            url: req.originalUrl
+          }
         });
     } catch (e) {
         console.log(e);

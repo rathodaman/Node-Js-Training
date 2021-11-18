@@ -6,6 +6,7 @@ var logger = require('morgan');
 const exphbs=require('express-handlebars');
 var mongoose = require('mongoose');
 var fileUpload = require('express-fileupload');
+var helpers = require('handlebars-helpers')();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,7 +16,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars',exphbs({
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  "helpers":helpers
 }))
 app.set('view engine', 'handlebars');
 

@@ -2,9 +2,9 @@ $("document").ready(function(){
         $("#signupForm").validate({  
           rules: {
                     fname: {
-                                required :true,
-                                minlength:3
-                            },
+                      required :true,
+                      minlength:3
+                    },
                     lname: "required",
                     interest: {
                       required: true
@@ -43,6 +43,7 @@ $("document").ready(function(){
                           required : "Select Your Image"
                         }      
           },
+          //Submit Form data using Post method
            submitHandler: function() {
                      let data = new FormData($("#signupForm")[0]);
                      console.log(data+"calling from")
@@ -63,16 +64,9 @@ $("document").ready(function(){
                       })
             }
         })
+
+        //Delete click event using Delete method
         $(document).on('click', '.delete', function () {
-          // function myFunction() {
-          //   var txt;
-          //   if (confirm("Press a button!")) {
-          //     txt = "You pressed OK!";
-          //   } else {
-          //     txt = "You pressed Cancel!";
-          //   }
-          //   document.getElementById("demo").innerHTML = txt;
-          // }
                 var id = $(this).data('id')
                 console.log(id)
                 $.ajax({
@@ -88,6 +82,8 @@ $("document").ready(function(){
                     }
                 });
         });
+
+        //Update click event using Get method
         $(document).on('click', '.edit', function () {
                 console.log("hello aman");
                 $('#submit').hide();
@@ -121,10 +117,14 @@ $("document").ready(function(){
                     }
                 })         
         })
+
+        //Reset Form click event 
         $(document).on('click', '.form-re', function () {
           //console.log(45454)
           $('.image').html('');
         })
+
+        //Update click event using Put method
         $(document).on('click', '#update', function () {      
                 var id = $(this).data('id')
                 console.log("id")
@@ -141,12 +141,15 @@ $("document").ready(function(){
                   success: function(data){
                      alert("Update Successful")
                           $('#dynamic').load(location.href.replace('form','users'));
+                          $('#signupForm')[0].reset();
                   },
                   error: function(err){
                     console.log(err);
                   }
                 });
         });
+
+        //Search table click event
         $(document).on('click', '#table-search', function () {      
                 console.log("id")
                 //const href = location.href.replace('form','users')+'?' + $("#searchForm").serialize();
@@ -154,13 +157,14 @@ $("document").ready(function(){
                 console.log("href"+href);
                 console.log(href)
                 $('#dynamic').load(href);
-                //$('#dynamic').load(location.href.replace('form','users'));
-                //console.log(id)
-               //let formdata = new FormData($("#searchForm")[0]);
         });
+
+        //Reset Searching table click event
         $(document).on('click', '#table-reset', function () {
           $('#dynamic').load(location.href.replace('form','users'));
         })
+
+        //sorting click event
         $(document).on('click', '.sortingHeader', function () {
           let url = $(this).attr('data-url');
           console.log("before");
@@ -176,6 +180,18 @@ $("document").ready(function(){
           console.log(url)
           console.log("after")
           $(this).attr('data-url', url);
+        })
+
+        //pagination click event
+        $(document).on('click', '.page-item', function () {
+          //console.log("aman rathod");
+          let url = $(this).attr('data-url');
+          //console.log("url is : ");
+          //console.log(url);
+          $('#dynamic').load(location.href.replace('form','users') + url+ '&' + $("#searchForm").serialize());
+          //console.log(location.href.replace('form','users') + url + '&' + $("#searchForm").serialize());
+          //console.log(location.href.replace('form','users') + url);
+          //$(this).attr('data-url', url);
         })
 }); 
             

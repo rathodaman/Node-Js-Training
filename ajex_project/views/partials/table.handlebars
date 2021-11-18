@@ -6,7 +6,7 @@
         <td>{{gender}}</td>
         <td>{{address}}</td>
         <td>
-             <img src="/images/{{image}}" width="150px">
+             <img src="/images/{{image}}" width="150px" height="100px">
         </td>
         <td>
             <button data-id="{{_id}}" class="edit">Edit</button>
@@ -15,17 +15,14 @@
     {{else}}<td><h2 id="else">Not Record Found</h2></td>
     </tr> 
 {{/each}}
-{{!-- {{#if pagination.totalPage}}
-<div class="col-md-12">
-    {{pagination pagination}}
-</div>
-{{/if}}
-<nav aria-label="Page navigation example">
+{{#if pagination}}
+<tr>    
+    <td colspan="7">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        {{#each pagination.totalPage}}
+        <li class="page-item" data-url="?page={{this}}"><a class="page-link" {{#compare this '==' ../pagination.page}}style="pointer-events: none;background-color: dimgrey;color: beige;"{{/compare}}  data-url="?page={{this}}">{{this}}</a></li>
+        {{/each}}
     </ul>
-</nav> --}}
+    </td>
+</tr>
+{{/if}}
