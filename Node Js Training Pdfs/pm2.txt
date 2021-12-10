@@ -1,0 +1,91 @@
+What is PM2?
+-PM2 is an acronym of Process Management Module which is used to run and manage Node.js applications.
+-It's an open-source with an in-built load balancer.
+-When a process goes down, PM2 will automatically restart the service and make it Live.
+-PM2 works on Linux, Windows, and macOS.
+-We can enable the process to automatically start on system boot up or while restart.
+-Without the need of changing the application code, we can scale the applications or processes for High Availability.
+
+
+
+>Installing PM2
+
+
+
+>Check Version
+	pm2 --version
+
+
+>Setup Sample Nodejs App for Testing
+
+	var http = require("http");
+	http.createServer(function (request, response) {
+	    response.writeHead(200, {'Content-Type': 'text/plain'});
+  	  response.end('Testing Nodejs Application with PM2\n');
+	}).listen(8080);
+	console.log('Server running at http://127.0.0.1:8080/');
+
+
+>Starting the Nodejs app with PM2,
+
+	pm2 start demo.js
+
+>Install PM2 Product Process Manager 
+	npm i -g pm2 
+
+>Managing PM2 Process
+	To get the lists of all the available pm2 command, then execute the below command.
+	pm2 -h
+
+>To start a process,
+	pm2 start demo.js
+	pm2 start server.js --name "my-app"
+
+
+>To list all your node application (process/microservices)
+	 pm2 list
+
+>Stop an app:
+	pm2 stop my-app
+
+>Restart an app:
+	pm2 restart my-app
+
+>To view detailed information about an app:
+	pm2 show my-app
+
+>To Automatic Restart when Code Change
+	pm2 start my-app --watch
+
+>To delete all the instances of a particular process,
+	pm2 delete demo.js
+
+
+>To monitor logs, custom metrics, process information from all processes by running the following command.
+	pm2 monit
+
+
+>To list all the node applications or processes, run the below command.
+	pm2 ls
+
+
+>To restart all the instances of an application then, run the below command.
+	pm2 restart demo.js
+>To reset the restart count for a process or for all the processes,
+	pm2 reset all
+
+>To Check Logs
+	pm2 logs demo.js
+	
+
+>To flush all the logs for all the applications, execute the below command.
+	pm2 flush
+
+
+
+
+
+
+
+	
+

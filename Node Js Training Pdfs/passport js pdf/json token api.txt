@@ -1,0 +1,110 @@
+1.)Create API Login Signup DataFetch
+2.)Install Package
+npm i jsonwebtoken --save
+
+3.) Token Create
+
+ //Token Key 32 Character
+        var privateKey = "sdasdsadsakjslkjsdlfjsdklfjsdklfjsdklfjsdklfjsdkjfsddfsdfkjsdlfjsdf"
+        let params = {
+            email : db_users_array.email,
+            name: db_users_array.user_name
+        }
+        var token =  jwt.sign(params, privateKey); // , { expires_in: '500s' }
+        console.log("Token is "  + token);
+
+
+4.) 
+
+//MiddleWare to Check Auth
+var AuthJWT  = (req,res,next) => {
+    var token = req.headers.authorization;
+    token = token.split(' ')[1];
+    var privateKey = 'sdasdsadsakjslkjsdlfjsdklfjsdklfjsdklfjsdklfjsdkjfsddfsdfkjsdlfjsdf';
+    jwt.verify(token,privateKey,function(err,decoded){
+      if(err){
+          console.log(err);
+        res.send({message:'Invalid Token'});
+      }else{
+        next();
+      }
+    })
+}
+  
+
+5)Router Secure
+
+router.get('/get-all-users-api', AuthJWT,function(req, res, next) {
+
+6.) PostMan Access API Using 
+Header: 
+Authorization : Bearer {JSON Token}
+
+
+---------------------------------------------------------------
+
+Passport JWT
+
+http://www.passportjs.org/packages/passport-jwt/
+
+
+1.)Install
+	npm i passport 
+	npm i passport-jwt
+
+2.)App.js
+
+
+var passport = require('passport')
+
+app.use(passport.initialize());
+
+3.) Middlware
+
+
+
+var passport = require('passport');
+
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = 'sdasdsadsakjslkjsdlfjsdklfjsdklfjsdklfjsdklfjsdkjfsddfsdfkjsdlfjsdf';
+ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+     console.log(jwt_payload.email);
+     UsersModel.findOne({user_email: jwt_payload.email}, function(err, user) {
+        if (err) {
+            console.log(err);
+            return done(err, false);
+        }
+        if (user) {
+            console.log("User Data " + user);
+            return done(null, user);
+        } else {
+            console.log('else');
+            return done(null, false);
+            // or you could create a new account
+        }
+    });
+}));
+ 
+
+
+4.) Auth API
+
+router.get('/get-all-users-api', passport.authenticate('jwt',{session:false}),function(req, res, next) {
+    
+    UsersModel.find({}, function(err, data) {
+        if (err) {
+            Response.errorResponse(err, res);
+        } else {
+            res.send(JSON.stringify({"status": 200,"flag": 1, "message": "Users Data", "data": data}));
+        }
+    });
+
+});
+
+
+5.) Provide Token in Auth
+
+6.)Run APi

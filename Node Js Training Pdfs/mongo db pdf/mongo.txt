@@ -1,0 +1,139 @@
+db.getCollection('users').find({}).pretty()
+db.getCollection('users').find({user_name:"aman"})
+show dbs
+show collections
+db
+db.users.insert([{product_name:"mobile",price:15000,company_name:"Mi"},{product_name:"Cooler",price:8000,company_name:"symphony"}])
+db.getCollection('users').find({product_name:"Cooler",price:{$gt:4000}})
+db.getCollection('users').findOne({})
+db.getCollection('users').find({}).skip(5).limit(5).size()
+db.getCollection('users').find({}).sort({})
+db.getCollection('users').update({product_name:"Cooler"},{$set:{product_name:"air conditionor"}},{multi:true})
+db.getCollection('users').remove({product_name:"cooler"})
+
+//Show Hide field Projection
+db.getCollection('users').find({},{_id:0,user_email:0})
+db.getCollection('users').find({user_name:"aman"},{_id:0})
+
+//Relational Operator
+db.getCollection('users').find({age:{$eq:18}})
+db.getCollection('users').find({age:{$ne:18}})
+db.getCollection('users').find({age:{$gt:18}})
+db.getCollection('users').find({age:{$lt:50}})
+db.getCollection('users').find({age:{$gte:50}})
+db.getCollection('users').find({age:{$lte:50}})
+db.getCollection('users').find({age:{$in:[40,25,68]}})
+db.getCollection('users').find({age:{$nin:[40,25,68]}})
+db.getCollection('users').find({$and:[{age:25},{user_name:"tappuda"}]})
+db.getCollection('users').find({$or:[{age:25},{user_name:"tappuda"}]})
+db.getCollection('users').find({$nor:[{age:25},{user_name:"tappuda"}]})
+
+//cursor
+var mycur=db.users.find()
+mycur
+
+var mycur=db.users.find()
+while(mycur.hasNext()){
+        print(tojson(mycur.next()))
+}
+
+//forEach
+var mycur=db.users.find()
+mycur.forEach(printjson)
+
+//Array
+db.users.find().toArray()
+
+//Manually
+db.users.find()[0]
+db.users.find()[1]
+db.users.find()[2]
+
+//count
+db.users.find().count()
+
+//cursor Size
+db.users.find().size()
+db.users.find().skip(3).size()
+db.users.find().limit(3).size()
+db.users.find().limit(3).skip(3).size()
+
+//group By
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_salary:{$sum:"$price"}}}])
+			      ||  OR  ||
+db.getCollection('users').aggregate([
+					{
+						$group:{
+							_id:"$company_name",
+							total_salary:
+								     {
+								     	$sum:"$price"
+								     }
+						       }
+					}
+				    ])
+
+//MongoDb Array Operators
+******all,elemMatch,size,$,pop,push,pull********
+
+//Array value insert
+db.getCollection('users').insertOne({student_name:"aarav",mark:[89,90,76,26]})
+
+//find value with array value
+db.getCollection('users').find({mark:{$all:[80]}})
+
+db.getCollection('users').find({mark:{$elemMatch:{$gt:80,$lt:90}}})
+
+//array size
+db.getCollection('users').find({mark:{$size:6}})
+
+//$ array value update
+db.getCollection('users').updateOne({student_name:"aman",mark:25},{$set:{"mark.$":105}})
+
+//pop asending desending order 1 End , -1 FIRST
+db.getCollection('users').updateOne({student_name:"aman"},{$pop:{mark:1}})
+db.getCollection('users').updateOne({student_name:"aman"},{$pop:{mark:-1}})
+
+//push
+db.getCollection('users').updateOne({student_name:"aman"},{$push:{mark:88}})
+
+//pull (Apply on Conditions and remove element)
+db.getCollection('users').update({student_name:"aman"},{$pull:{mark:{$gt:90}}})
+
+//Distinct() Method return Unique Values in array
+db.getCollection('users').distinct("firstName")
+
+//countDocuments() method counts the number of documents that matches to the selection criteria
+db.getCollection('users').countDocuments({})
+
+//Aggregate Functions With Group By Clause
+************||$sum,$avg,$min,$max,$addToSet,$push,$pop,$first,$last||**********************
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_salary:{$sum:"$price"}}}])
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_average:{$avg:"$price"}}}])
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_min:{$min:"$price"}}}])
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_max:{$max:"$price"}}}])
+//department wise salary
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",companywise_salary:{$push:"$price"}}}])
+//distinct salary find not repeated
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",distinct_price:{$addToSet:"$price"}}}])
+//first salary return
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",first_price:{$first:"$price"}}}])
+//last salary return
+db.getCollection('users').aggregate([{$group:{_id:"$company_name",last_price:{$last:"$price"}}}])
+
+//Incrementing value of documents in collection
+db.getCollection('users').update({product_name:"laptop"},{$inc:{price:2000}})
+
+//Decrementing value of documents in collection
+db.getCollection('users').update({product_name:"laptop"},{$inc:{price:-2000}})
+
+//Multiply value of documents in collection
+db.getCollection('users').update({product_name:"laptop"},{$mul:{price:2}})
+
+//Renaming the name of the field of document in collection
+db.getCollection('users').update({name:"abhishek"},{$rename:{name:"user_name"}})
+
+//Drop Database
+db.dropDatabase()
+
+

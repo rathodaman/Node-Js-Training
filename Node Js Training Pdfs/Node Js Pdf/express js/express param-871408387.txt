@@ -1,0 +1,60 @@
+1. req.body
+
+Generally used in POST/PUT requests.
+Use it when you want to send sensitive data(eg. form data) or super long JSON data to the server.
+
+	axios.post('/giraffe', {
+    key1: 'value1',
+    key2: 'value2'
+  })
+  .then(response => {
+    ...
+  })
+  .catch(error => {
+    ...
+  })
+
+
+2. req.params
+
+These are properties attached to the url i.e named route parameters. You prefix the parameter name with a colon(:) when writing your routes.
+
+  app.get('/demo/:id', (req, res) => {
+   console.log(req.params.id)
+  })
+
+
+
+
+
+res.redirect('/form');
+
+	  GET  http://localhost:3000/demo/1
+
+
+app.get('/demo/:id/:status', (req, res) => {
+   console.log(req.params.id)
+  })
+
+	  GET  http://localhost:3000/demo/1/update
+
+
+Table:
+
+1 Akash <a href='/delete/1'>Delete</a>
+1 Akash <a href='/edit/1'>Edit</a>
+
+
+3. req.query
+	
+	req.query is mostly used for searching,sorting, filtering, pagination, e.t.c
+Say for instance you want to query an API but only want to get data from page 10, this is what you'd generally use.
+It written as key=value
+
+http://127.0.0.1:3000/demo/?number=1
+
+
+router.get('/demo/', function(req, res, next) {
+  console.log("number "+req.query.number);
+ 
+});

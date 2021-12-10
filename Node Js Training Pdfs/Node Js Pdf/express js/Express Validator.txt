@@ -1,0 +1,259 @@
+Express Validator
+Express Validator helps Node.js app to implement server-side validation to validate user data
+
+
+Types of Validation
+Client Side
+Server Side
+
+Why Server-side Validation?
+if you consider Man in middle attacks. Security is the most significant expect when it comes to safety and security; a server must not have total faith on the client-side. The client-side validation can be deciphered, or data can be manipulated by just turning off the JavaScript in the browser.
+
+
+Why express-validator is useful?
+As per their official documentation:
+express-validator is a set of express.js middlewares that wraps validator.js validator and sanitizer functions.
+
+Check API
+Filter API
+Schema Validation
+Validation chain API
+Validation Result API
+Custom Error Messages
+Sanitization chain API
+Validation middlewares
+
+
+Offical Website : https://express-validator.github.io/docs/index.html
+
+
+>Download Package : 
+
+	npm install express-validator --save
+
+>After installing express-validator, open the routes/index.js file and import the check API to use its validation functions:
+
+const {check, validationResult} = require('express-validator/check');
+
+
+check is the primary function used to validate and sanitize input. It takes in 2 optional parameters:
+field: The field parameter can be a string or an array of strings representing the input fields you want to check. If there is no field value, the entire request object will get checked.
+message: The message parameter holds a string that contains a custom error message. If there is no message value, the default message is "Invalid value".
+validationResult is a function of the body request object (req) and is used to return an object containing all validation errors.
+
+
+check('name')
+  .isAlpha()
+  .withMessage('Must be only alphabetical chars')
+  .isLength({ min: 10 })
+  .withMessage('Must be at least 10 chars long')
+
+
+
+
+Examples
+
+>Making sure fields are not empty
+
+	 to validate your form input, you need to pass an array in which you specify the fields that you want to validate as a second argument to your route handler for /users POST requests. To do that, add the following code after the GET route handling code in
+
+
+    check('name').not().isEmpty().withMessage('Name must have more than 5 characters'),
+    check('classYear', 'Class Year should be a number').not().isEmpty(),
+    check('weekday', 'Choose a weekday').optional(),
+    check('email', 'Your email is not valid').not().isEmpty(),
+    check('password', 'Your password must be at least 5 characters').not().isEmpty(),
+
+>Validating fields' length
+
+    check('name').not().isEmpty().isLength({min: 5}).withMessage('Name must have more than 5 characters'),
+  check('password', 'Your password must be at least 5 characters').not().isEmpty().isLength({min: 5}),
+
+
+>Validating fields' type
+
+
+   check('classYear', 'Class Year should be a number').not().isEmpty().isInt(),
+  check('weekday', 'Choose a weekday').optional().not().isIn(['Sunday', 'Saturday']),
+
+
+>Validating and sanitizing emails
+
+	  check('email', 'Your email is not valid').not().isEmpty().isEmail().normalizeEmail(),
+
+>Sanitizing fields with trim and escape
+	With Express Validator, you can also trim away spaces from your data and escape special characters using the trim() and escape() functions. The escape() function can really come in handy when protecting yourself from cross-site scripting attacks. To add this feature to your app, refactor the call to check('name') as follows:
+
+	  check('name').exists().isLength({min: 5}).trim().escape().withMessage('Name must have more than 5 characters'),
+	
+>.matches()
+check('password').isLength({ min: 8 })
+  .withMessage('Password Must Be at Least 8 Characters')
+  .matches('[0-9]').withMessage('Password Must Contain a Number')
+  .matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter')];
+
+Example : PAN CARD , Aadhar Card and Passport Number,Indian Mobile Number,GST No
+Password Strong Aa0$
+
+
+>Add sanitation
+1-trim() trims characters from input. By default (with no parameters) this method trims whitespace.
+2-escape() will replace certain characters (i.e. <, >, /, &, ', ") with the corresponding HTML entity.
+3-normalizeEmail() ensures the email address is in a safe and standard format.
+
+
+  check('username', 'Username Must Be an Email Address').isEmail().trim().escape().normalizeEmail(),
+
+https://github.com/validatorjs/validator.js#sanitizers
+
+ 
+
+
+
+
+Check for errors
+
+
+To return the error result object we can choose from 2 methods:
+
+array() is the method returns an array of all validation errors.
+mapped() will return an array containing only the first validation error for each field.
+
+Example : 
+
+<form>
+      Enter your Email    : <input type="text" name="email"> <br>
+      Enter your Name     : <input type="text" name="name"> <br>
+      Enter your Number   : <input type="number" name="mobile"> <br>
+      Enter your Password : <input type="password" name="password"> <br>
+      <input type="submit" value="Submit Form">
+
+</form>
+
+
+const { check, validationResult } = require('express-validator');
+
+
+1-check is the primary function used to validate and sanitize input. It takes in 2 optional parameters:
+	1.1-field: The field parameter can be a string or an array of strings representing the input fields you want to check. If there is no field value, the entire request object will get checked.
+	1.2-message: The message parameter holds a string that contains a custom error message. If there is no message value, the default message is "Invalid value".
+2-validationResult is a function of the body request object (req) and is used to return an object containing all validation errors.
+
+
+
+router.get('/form', function(req, res, next) {
+  res.render('form');
+});
+
+
+router.post('/form-process',[
+  check('email', 'Email length should be 10 to 30 characters').isEmail().isLength({ min: 10, max: 30 }),
+  check('name', 'Name length should be 10 to 20 characters').isLength({ min: 10, max: 20 }),
+  check('mobile', 'Mobile number should contains 10 digits').isLength({ min: 10, max: 10 }),
+  check('password', 'Password length should be 8 to 10 characters').isLength({ min: 8, max: 10 })
+], function(req, res, next) {
+  const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          res.json(errors)
+      }
+      else {
+          res.send("Successfully validated")
+      }
+});
+
+
+
+There are many more of these methods, all coming from validator.js, including:
+
+https://github.com/validatorjs/validator.js#validators
+
+contains(), check if value contains the specified value
+equals(), check if value equals the specified value
+isAlpha()
+isAlphanumeric()
+isAscii()
+isBase64()
+isBoolean()
+isCurrency()
+isDecimal()
+isEmpty()
+isFQDN(), is a fully qualified domain name?
+isFloat()
+isHash()
+isHexColor()
+isIP()
+isIn(), check if the value is in an array of allowed values
+isInt()
+isJSON()
+isLatLong()
+isLength()
+isLowercase()
+isMobilePhone()
+isNumeric()
+isPostalCode()
+isURL()
+isUppercase()
+isWhitelisted(), checks the input against a whitelist of allowed characters
+You can validate the input against a regular expression using matches().
+
+Dates can be checked using
+
+isAfter(), check if the entered date is after the one you pass
+isBefore(), check if the entered date is before the one you pass
+isISO8601()
+isRFC3339()
+
+
+
+List of sanitization / filter methods
+-------------------------------------
+trim(chars)                     //Trim optional chars, default is to trim whitespace (\r\n\t\s)
+ltrim(chars)
+rtrim(chars)
+ifNull(replace)
+toFloat()
+toInt()
+toBoolean()                     //True unless str = '0', 'false', or str.length == 0
+toBooleanStrict()               //False unless str = '1' or 'true'
+entityDecode()                  //Decode HTML entities
+entityEncode()
+xss()                           //Remove common XSS attack vectors from text (default)
+xss(true)     
+
+
+
+custom() Method
+---------------
+To make sure our users input unique usernames during registration, we can't use the standard methods wrapped from Validator.js methods, since there is no method to check it.
+
+The custom() method accepts a function, which can additionally be async. If the function is async, you'll want to reject the promise if the validation fails, and specify a custom message. If not, you can throw an exception.
+
+
+app.post('/register',
+    body("username").custom(value => {
+        return User.find({
+            username: value
+        }).then(user => {
+            if (user.length > 0) {
+                // Custom error message and reject
+                // the promise
+                return Promise.reject('Username already in use');
+            }
+        });
+    }),
+    (req, res) => {
+        // Validate incoming input
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            });
+        }
+        ...
+    })
+
+
+Schema Validation with express-validator
+----------------------------------------
+Schema validation offers a cleaner approach to validating data. Instead of calling numerous functions, we specify the validation rules for each field and pass the schema into a single middleware function called checkSchema().
+
