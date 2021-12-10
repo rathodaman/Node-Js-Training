@@ -1,0 +1,59 @@
+<html>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <h1>Update Details</h1>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td> <input type="text" placeholder="Enter Name" name="user_name" value="{{editdata.user_name}}"></td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    <input type="radio" name="user_gender" value="{{editdata.user_gender}}" > Male
+                    <input type="radio" name="user_gender" value="{{editdata.user_gender}}"> Female
+                </td>
+            </tr>
+            <tr>
+                <td>DOB:</td>
+                <td>
+                    <input type="date" name="user_dob" value="{{editdata.user_dob}}">
+                </td>
+            </tr>
+            <tr>
+                <td>MobileNo:</td>
+                <td><input type="number" placeholder="Enter Mobile No" name="user_mobile" value="{{editdata.user_mobile}}"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" placeholder="Enter Email" name="user_email" value="{{editdata.user_email}}"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" placeholder="Enter Password" name="user_password" value="{{editdata.user_password}}"></td>
+            </tr>
+
+            <tr>
+                <td>Are you Admin ?</td>
+                <td> <select name="user_isadmin" value="{{editdata.user_isadmin}}">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Image:</td>
+                <td><input type="file" name="user_image" value="{{user_image}}"></td>
+            </tr>
+
+            <tr>
+                <td><input type="submit"></td>
+                <td><input type="reset"></td>
+            </tr>
+        </table>
+        <a href="/login">Login</a>
+    </form>
+</body>
+
+</html>

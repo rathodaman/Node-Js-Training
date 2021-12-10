@@ -1,0 +1,31 @@
+<a href="addCategory">addCategory</a>
+<a href="displayCategory">displayCategory</a>
+<a href="addProduct">addProduct</a>
+<a href="displayProduct">displayProduct</a>
+<style>
+    table {
+            counter-reset: tableCount;
+          }
+    .counterCell:before {
+            content: counter(tableCount); 
+            counter-increment: tableCount; 
+    }
+</style>
+<table border="1px">
+    <tr>
+        <th>Id</th>
+        <th>Category Name</th>
+        <th>Action</th>
+    </tr>
+     {{#each categorydata}}
+    <tr>
+        <td class="counterCell"></td>
+        <td>{{categoryName}}</td>
+        <td>
+            <a href="">Edit</a> |
+            <a href="">Delete</a>
+        </td>
+    </tr>
+    {{/each}}
+
+</table>

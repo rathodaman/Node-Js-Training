@@ -1,0 +1,41 @@
+<html>
+<body>
+    <h1>Display Table</h1>
+    <a href="signup">Signup</a>  |
+    <a href="login">Login</a>   |
+    <a href="home">Home</a>  |
+    <a href="display-table">Display Table</a>  
+
+    {{ user_array.length}}
+    <table border='1'>
+        <tr>
+            
+            <th>Name</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Action</th>
+        </tr>
+        {{#each user_array}}
+        <tr>
+            
+            <td>{{user_name}}</td>
+            <td>{{user_gender}}</td>
+            <td>{{user_dob}}</td>
+            <td>{{user_mobile}}</td>
+            <td>{{user_email}}</td>
+            <td>{{user_password}}</td>
+            <td>
+                    <a href='/edit/{{_id}}'>Edit</a> | 
+                    <a href='/delete/{{_id}}'>Delete</a> 
+                    {{!-- <a href='/show/{{_id}}'>Show</a> --}}
+          </td>
+        </tr>
+         {{else}}
+        No Record Found
+    </table>
+     {{/each}}
+</body>
+</html>

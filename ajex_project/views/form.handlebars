@@ -12,6 +12,8 @@
     <script src="../javascripts/bootstrap.js"></script>
     <script src="../javascripts/validate.js"></script>
     <script src="../javascripts/form.js"></script>
+    
+
 </head>
 <body>
     <section class=" gradient-custom">
@@ -110,11 +112,12 @@
                         <input class=" form-control-lg " id="image" type="file" name="image"/>
                         
                     </div>
-                    <div class="image"></div>
+                    <div class="image"><p class="imgName"></p></div>
                 </div>
 
               <div class="mt-4 pt-2">
                 <input class="btn btn-primary btn-lg" type="submit" id="submit"/>
+                {{!-- <button class="btn btn-primary btn-lg update" style="display: none;" data-id="" value="Update" id="update"></button> --}}
                 <input class="btn btn-primary btn-lg update" style="display: none;" type="button" data-id="" value="Update" id="update"/>
                 <input class="btn btn-primary btn-lg form-re" style="display: none;" type="reset" value="Reset" id="form-reset"/>
               </div>
@@ -125,7 +128,44 @@
     </div>
   </div> 
 
+  </div class="row">
+    <div class="col-4">
+      <button><a href="/users?exportType=csv" id="export" class="btn btn-warning btnx">Export</button></a>
+    </div>
+  <div class="col-4"></div>
+   
+  <form id="exportEmailForm">
+    <div class="container">
+        <!-- Trigger the modal with a button -->
+         {{!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><a href="/users?exportType=email">Export To Email</button></a> --}}
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Export To Email</button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Enter Email</h2>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="col-md-8 mb-4" style="margin-top:8%;">
+                      <div class="form-outline">
+                        <input type="email" class="form-control " id="email" name="email" placeholder="Enter Email Id"/>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="toemail" class="btn btn-default" data-dismiss="modal">Send</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
   
+</div>       
+  </div><br><br>
   <div>
       <form id="searchForm">
         <div class="row" style="justify-content: center;">
@@ -166,17 +206,7 @@
     <tbody id="dynamic">
     {{> table}}
     </tbody>
-    <tfoot>
-        <tr>
-          <th>Id</th>
-          <th class="sortingHeader" data-url="?fieldName=firstName&order=asc" name="firstName">First Name</th>
-          <th class="sortingHeader" data-url="?fieldName=LastName&order=asc">Last Name</th>
-          <th class="sortingHeader" data-url="?fieldName=gender&order=asc">Gender</th>
-          <th class="sortingHeader" data-url="?fieldName=address&order=asc">Address</th>
-          <th>Image</th>
-          <th>Action</th>
-      </tr>
-    </tfoot>   
+  
   </table>
 </section>
 </body>

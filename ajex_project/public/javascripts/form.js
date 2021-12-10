@@ -20,9 +20,9 @@ $("document").ready(function(){
                       minlength: 4,
                       maxlength: 80
                     },
-                    image:{
-                        required: true
-                    }
+                    // image:{
+                    //     required: true
+                    // }
                     
           },
           messages: {
@@ -39,14 +39,14 @@ $("document").ready(function(){
                       minlength: "Address must be at least 10 char long",
                       maxlength: "Address must be at least 150 char long",
                     },
-                    image:{
-                          required : "Select Your Image"
-                        }      
+                    // image:{
+                    //       required : "Select Your Image"
+                    //     }      
           },
           //Submit Form data using Post method
            submitHandler: function() {
                      let data = new FormData($("#signupForm")[0]);
-                     console.log(data+"calling from")
+                     //console.log(data+"calling from")
                       $.ajax({
                         url:'/form',
                         enctype: "multipart/form-data",
@@ -56,10 +56,25 @@ $("document").ready(function(){
                         async: false,
                         type: 'POST',
                         data: data,
-                        success: function(signupForm,status){
-                          alert("Success")
-                          $('#dynamic').load(location.href.replace('form','users'));
-                          $('#signupForm')[0].reset();
+                        success: function(data) {
+                          console.log("mm")
+                          console.log(data.msg)
+                          
+                          if(data.type==="success"){
+                            console.log("data"+data)
+                            alert(data.msg);
+                            $('#dynamic').load(location.href.replace('form','users'));
+                            $('#signupForm')[0].reset();
+                          } else {
+                            alert(data.msg);
+                          }
+                          //alert("error")
+                        },
+                        error: function (error){
+
+                          console.log("aman error is:---");
+                          console.log(error);
+                          //alert(error);
                         }
                       })
             }
@@ -75,6 +90,7 @@ $("document").ready(function(){
                     data: { id: id },
                     success: function(data){
                       console.log(data);
+                      alert("record Deleted");
                       $('#' + id).remove(); 
                     },
                     error: function (err){
@@ -82,7 +98,7 @@ $("document").ready(function(){
                     }
                 });
         });
-
+      
         //Update click event using Get method
         $(document).on('click', '.edit', function () {
                 console.log("hello aman");
@@ -120,7 +136,6 @@ $("document").ready(function(){
 
         //Reset Form click event 
         $(document).on('click', '.form-re', function () {
-          //console.log(45454)
           $('.image').html('');
         })
 
@@ -139,9 +154,24 @@ $("document").ready(function(){
                   processData: false,
                   contentType: false,
                   success: function(data){
-                     alert("Update Successful")
+                    let a= $("#signupForm").valid();
+                    if(a==true){
+                      if(data.type==="success"){
+                        alert(data.msg);
                           $('#dynamic').load(location.href.replace('form','users'));
                           $('#signupForm')[0].reset();
+                          $('.image').html('');
+                          $('#submit').show();
+                          $('#update').hide();
+                          $('#form-reset').hide();
+                          $('.formName').show();
+                          $('.UpdateformName').hide();
+                      }
+                      else{
+                        alert(data.msg);
+                      }
+                    }
+                     
                   },
                   error: function(err){
                     console.log(err);
@@ -186,12 +216,39 @@ $("document").ready(function(){
         $(document).on('click', '.page-item', function () {
           //console.log("aman rathod");
           let url = $(this).attr('data-url');
-          //console.log("url is : ");
-          //console.log(url);
-          $('#dynamic').load(location.href.replace('form','users') + url+ '&' + $("#searchForm").serialize());
-          //console.log(location.href.replace('form','users') + url + '&' + $("#searchForm").serialize());
-          //console.log(location.href.replace('form','users') + url);
-          //$(this).attr('data-url', url);
+          $('#dynamic').load(location.href.replace('form','users') + url+ '&' + $("#searchForm").serialize()); 
         })
-}); 
-            
+
+         //Export Button click event
+         $(document).on('click', '#export', function () {
+          let search=$("#searchForm").serialize();
+          console.log("my search data is:"+search);
+          const href = location.href.replace('form','users')+'?' +search;
+          console.log("aman");
+          console.log(href);
+          $.ajax({
+            url:href,
+            type:'GET',
+            success: function(data){
+
+            }
+          })
+        })
+        
+        //Export To Email Button click event
+        $(document).on('click', '#toemail', function () {
+          //let url = $(this).attr('data-url');
+          let search=$("#searchForm").serialize();
+          console.log("my search data is:"+search);
+          const href = location.href.replace('form','users')+'?' + $("#exportEmailForm").serialize()+'&'+search;
+          console.log("aman");
+          console.log(href);
+          $.ajax({
+            url:href,
+            type:'GET',
+            success: function(data){
+
+            }
+          })
+        })
+});            

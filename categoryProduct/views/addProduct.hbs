@@ -1,0 +1,14 @@
+<a href="addCategory">addCategory</a>
+<a href="displayCategory">displayCategory</a>
+<a href="addProduct">addProduct</a>
+<a href="displayProduct">displayProduct</a>
+<form method="post">
+    <h1>Add Product</h1>
+    <label>Product Name:</label>
+    <input type="text" name="product"><br><br><br>
+    <label>Category:</label>
+    {{#each categorydata}}
+    <input type="checkbox" name="_category" value='{{_id}}'>{{categoryName}}&nbsp;&nbsp;
+    {{/each}}<br><br>
+    <input type="submit" value="Add Product">
+</form>

@@ -1,0 +1,12 @@
+<h1> Contact Page </h1>
+ <h1>Hi,{{data.user_name}}</h1>
+ <a href="/contact">Contact</a> ||
+ <a href="/about">About</a> ||
+ <a href="/logout">Logout</a> </h1>
+<h3>This is your Contact page {{data.user_name}} </h3>
+
+<ul>
+{{#each data.categoryData}} 
+<li style="display: inline;">{{categoryName}} |</li>
+{{/each}}
+</ul>
