@@ -1,0 +1,27 @@
+<table class="table" id="table" border="1" cellpadding="5" cellspacing="0" align="center">
+    <thead>
+      <tr>  
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone No.</th>
+            <th>Password</th>
+            <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {{#each user_array}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{email}}</td>
+            <td>{{phone}}</td>
+            <td>{{password}}</td>
+            <td>
+                    <a href='/edit/{{_id}}'>Edit</a> | 
+                    <a href='/delete/{{_id}}'>Delete</a> 
+          </td>
+        </tr>
+         {{else}}
+        No Record Found
+        {{/each}}
+    </tbody>
+</table>

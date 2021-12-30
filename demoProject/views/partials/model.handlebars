@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {{!-- toaster link --}}
+    <link rel="stylesheet" href="https://www.jqueryscript.net/demo/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr/build/toastr.css">
+    <script src="https://www.jqueryscript.net/demo/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr/toastr.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+        <form method="post"  id="fileForm" enctype="multipart/form-data" >
+            <label>Choose File :</label>
+            <input type="file" id="file" name="file" required><br><br>
+             <button type="button" class="btn btn-info btn-lg" id="importButton" data-toggle="modal" data-target="#myModal">Import</button>  
+        </form>
+   
+ 
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Choose Mapping Field Details</h4>
+          <p id="hideData"></p>
+          Skip First Row: <input type="checkbox" id="skipFirstRow" name="skipFirstRow">
+        </div>
+         <form method="post"  id="mappingForm">
+            <div class="col-lg-10">
+            <table class="table table-striped" border="1" cellspacing="5" cellpadding="5">
+              <thead>
+                  <tr>
+                    <th>First Row</th>
+                    <th>Second Row</th>
+                    <th>Fields</th>
+                  </tr>
+              </thead>
+              <tbody id="mydiv">
+              </tbody>
+            </table>
+        </div>
+        
+          <div>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="importMapping">Import</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+         </form>
+        
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+</body>
+</html>

@@ -32,7 +32,8 @@ app.use(passport.session());
 
 //db connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/myproject', { useNewUrlParser: true })
+//mongoose.connect('mongodb://localhost:27017/myproject', { useNewUrlParser: true })
+mongoose.connect('mongodb://demoProject:demoProject@localhost:27017/demoProject')
 .then(() => console.log('connection succesful'))
 .catch((err) => console.error(err))
 //db connection end

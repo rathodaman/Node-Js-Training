@@ -5,14 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('exp-validator:server');
+var debug = require('debug')('log:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '5000');
+var port = normalizePort(process.env.PORT);
 app.set('port', port);
 
 /**

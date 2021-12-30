@@ -213,7 +213,7 @@ router.get('/display-table', function (req, res, next) {
       res.render('display-table', { user_array: db_users_array });
       //res.send(JSON.stringify({"flag":1,"message":"Data Listening","data":db_users_array}));
     }
-  });
+  }).lean();
 });
 
 //delete get method

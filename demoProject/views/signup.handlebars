@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <style>
+            .error {
+                color: red;
+            }
+            #emailHelp{ 
+                color: red;
+            }
+        </style>
+        <script type="text/javascript" src="../jquery.js"></script>
+        <script type="text/javascript" src="../validate.js"></script>
+        <script type="text/javascript" src="../form.js"></script>
+          {{!-- toaster link --}}
+    <link rel="stylesheet" href="https://www.jqueryscript.net/demo/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr/build/toastr.css">
+    <script src="https://www.jqueryscript.net/demo/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr/toastr.js"></script>
+
+    </head>
+<body>
+    <a href="signup">Signup</a>  |
+    <a href="login">Login</a>   |
+    {{!-- <a href="home">Home</a>  | --}}
+    <a href="usersList">Users List</a>  
+    {{log errors.email.message}}
+        {{"log errors.email.message"}}
+    <form method="post" id="signupForm">
+        <h1>Signup</h1>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td> <input type="text" placeholder="Enter Name" id="name" name="name">
+                 {{#if errors}}
+                    <small id="emailHelp" >{{errors.name.msg}}</small>
+                    {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" placeholder="Enter Email" id="email" name="email">
+                {{#if errors}}
+                    <small id="emailHelp" >{{errors.email.msg}}</small>
+                    {{/if}}
+                </td>
+                
+            </tr>
+            <tr>
+                <td>Phone No:</td>
+                <td><input type="number" placeholder="Enter Mobile No" id="phone" name="phone">
+                 {{#if errors}}
+                    <small id="emailHelp" >{{errors.phone.msg}}</small>
+                    {{/if}}
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" placeholder="Enter Password" id="password" name="password">
+                 {{#if errors}}
+                    <small id="emailHelp" >{{errors.password.msg}}</small>
+                    {{/if}}
+                </td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" id="signupSubmit"></td>
+                <td><input type="reset"></td>
+            </tr>
+        </table>
+        <a href="/login">Login</a>
+    </form>
+    <br>
+    <br>
+    
+    </div>
+      <button><a href="/add?exportType=csv" id="export">Export</button></a>
+    </div><br><br>
+    {{> model}}
+       {{!-- const users = await CSVToJSON({noheader:true,
+          output: "csv"}).fromFile(`public/images/${fileName}`); --}}
+
+ <div id="dynamic">
+{{> table}}
+ </div>
+
+ <div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+     <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Mapping Field</h4>
+        </div>
+         <form method="post"  id="addFieldForm">
+            <div class="col-lg-10">
+                <input type="text" class="form-control " placeholder="Enter Field Name" id="addInputField" name="addInputField">
+            </div>
+        
+       
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="addfieldButton">Add Field</button>
+          </div>
+         </form>
+        
+        </div>
+    </div>
+ </div>
+
+
+</body>
+
+</html>

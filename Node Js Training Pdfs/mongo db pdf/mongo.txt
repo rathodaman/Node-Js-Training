@@ -74,7 +74,7 @@ db.getCollection('users').aggregate([
 				    ])
 
 //MongoDb Array Operators
-******all,elemMatch,size,$,pop,push,pull********
+******************************************************all,elemMatch,size,$,pop,push,pull**********************************************************
 
 //Array value insert
 db.getCollection('users').insertOne({student_name:"aarav",mark:[89,90,76,26]})
@@ -107,7 +107,7 @@ db.getCollection('users').distinct("firstName")
 db.getCollection('users').countDocuments({})
 
 //Aggregate Functions With Group By Clause
-************||$sum,$avg,$min,$max,$addToSet,$push,$pop,$first,$last||**********************
+*****************************************||$sum,$avg,$min,$max,$addToSet,$push,$pop,$first,$last||************************************************
 db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_salary:{$sum:"$price"}}}])
 db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_average:{$avg:"$price"}}}])
 db.getCollection('users').aggregate([{$group:{_id:"$company_name",total_min:{$min:"$price"}}}])
@@ -136,4 +136,23 @@ db.getCollection('users').update({name:"abhishek"},{$rename:{name:"user_name"}})
 //Drop Database
 db.dropDatabase()
 
+//Deleting many documents in collection
+db.users.deleteMany({age: 38})
+
+//Adding new field to all the documents in collection
+db.users.update({},{$set:{age : 50}}, {multi:true})
+
+//What is Indexing?
+. Indexes helps to solve queries more efficiently. (Fastest way to Find information)
+. Indexes improve the speed of search operations in database .
+
+//Types of Index :- || Single field index, Compound index, Multi key index, Geospatial index, Text index, Hashed index ||
+.........Single Field Index........
+db.users.createIndex({name: 1})     ||or||  db.users.createIndex({name: 1},{name:"user name index"})
+
+//Finding indexes
+db.users.getIndexes()
+
+//Unique Index
+db.student.createIndex({fname:1},{unique: true})
 
