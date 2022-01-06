@@ -1,16 +1,12 @@
-scheduler.js
+module.exports = 
 {
     "scheduler":"on",
     "files":{
-        "<fileName without extension>":{
-            time:"* * * * * *",
-            name:"<fileName with extension>",
-            active:true/false
-        },
-        "<fileName without extension>":{
-            time:"* * * * * *",
-            name:"<fileName with extension>",
-            active:true/false
+        "cron":{
+            time:"*/1 * * * * *",
+            // time:"*/30 * * * * *",
+            name:"cron.js",
+            active:true
         }
     }
 }

@@ -1,0 +1,8 @@
+sudo docker exec -it local-mongo-420 sh
+mongo
+use admin
+db.auth("admin","admin")
+use databasename
+db.createUser({user: "databasename",pwd: "databasename",roles: ["readWrite","dbAdmin"]})
+exit
+exit

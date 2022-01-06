@@ -1,3 +1,4 @@
+require('custom-env').env()
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,7 +9,7 @@ const userModel=require("./schema/userSchema");
 const {engine}=require('express-handlebars');
 const CronJob = require('cron').CronJob;
 const Cron= require('./cron/cron')
-
+// const env = require('env');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -49,22 +50,6 @@ async function mymid(req,res){
 
 }
 mymid();
-
-
-/////////cron Start////////////////////////////////
-// Creating a cron job which runs on every 30 second
-// var job = new CronJob('* * * * * *',async function() {
-//   // var job = new CronJob('* * * * * *', function() { 
-//   console.log('You will see this message every second');
-  
-  
-// }, null, true, 'America/Los_Angeles');
-// job.start();
-/////////cron End/////////////////////////////////
-
-
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
